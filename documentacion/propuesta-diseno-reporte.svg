@@ -1,0 +1,137 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1100" viewBox="0 0 1600 1100" role="img" aria-labelledby="title description">
+  <title id="title">Propuesta visual para el reporte descargable de FincaControl</title>
+  <desc id="description">Maqueta de un reporte de finca con identidad verde y dorada, resumen de indicadores y tablas ordenadas.</desc>
+  <defs>
+    <linearGradient id="brand" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#064e3b"/>
+      <stop offset="1" stop-color="#022c22"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#f2c14e"/>
+      <stop offset="1" stop-color="#d89a19"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="5" stdDeviation="9" flood-color="#0f172a" flood-opacity=".10"/>
+    </filter>
+    <style>
+      .sans { font-family: "Segoe UI", Arial, sans-serif; }
+      .ink { fill: #172b24; }
+      .muted { fill: #64746d; }
+      .small { font-size: 15px; }
+      .body { font-size: 17px; }
+      .section { font-size: 18px; font-weight: 700; fill: #153d2d; }
+      .tablehead { font-size: 14px; font-weight: 700; fill: #fff; }
+      .tabletext { font-size: 15px; fill: #263b32; }
+    </style>
+  </defs>
+
+  <rect width="1600" height="1100" fill="#e9eeeb"/>
+
+  <rect x="30" y="24" width="1540" height="48" rx="10" fill="#fff" filter="url(#shadow)"/>
+  <circle cx="58" cy="48" r="13" fill="#138a52"/>
+  <path d="M58 56V43m0 7c-8 0-9-7-9-7s7-2 9 5m0-2c0-7 8-8 8-8s1 7-8 10" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="84" y="54" class="sans" font-size="16" font-weight="600" fill="#35443d">FincaControl</text>
+  <text x="262" y="54" class="sans" font-size="14" fill="#89958f">›</text>
+  <text x="282" y="54" class="sans" font-size="14" fill="#64746d">Reportes</text>
+  <text x="1504" y="54" text-anchor="end" class="sans" font-size="13" fill="#64746d">Vista previa de exportación Excel (.xlsx)</text>
+
+  <rect x="105" y="92" width="1390" height="966" rx="18" fill="#fff" filter="url(#shadow)"/>
+  <path d="M123 92h1354a18 18 0 0 1 18 18v155H105V110a18 18 0 0 1 18-18z" fill="url(#brand)"/>
+  <path d="M105 235h1490v6H105z" fill="url(#gold)"/>
+  <circle cx="1460" cy="158" r="100" fill="#fff" opacity=".045"/>
+  <circle cx="1378" cy="115" r="49" fill="#fff" opacity=".035"/>
+  <image href="../public/images/logo.png" x="143" y="113" width="105" height="105" preserveAspectRatio="xMidYMid meet"/>
+  <text x="274" y="139" class="sans" font-size="13" font-weight="700" letter-spacing="2.4" fill="#b9d8c8">FINCACONTROL · GESTIÓN RURAL</text>
+  <text x="274" y="180" class="sans" font-size="34" font-weight="700" fill="#fff">Reporte general de la finca</text>
+  <text x="274" y="207" class="sans" font-size="16" fill="#d2e3d9">Resumen operativo · Producción, inventario y actividad</text>
+  <rect x="1240" y="137" width="197" height="49" rx="11" fill="#fff" opacity=".13"/>
+  <text x="1260" y="157" class="sans" font-size="11" font-weight="700" letter-spacing="1.1" fill="#c6dfd0">FINCA</text>
+  <text x="1260" y="176" class="sans" font-size="16" font-weight="600" fill="#fff">La Esperanza</text>
+  <text x="274" y="226" class="sans" font-size="13" fill="#c6dfd0">Generado: 6 de noviembre de 2026</text>
+  <text x="1455" y="226" text-anchor="end" class="sans" font-size="13" fill="#c6dfd0">Periodo de producción: últimos 30 días</text>
+
+  <text x="145" y="281" class="sans" font-size="13" font-weight="700" letter-spacing="1.5" fill="#809087">RESUMEN EJECUTIVO</text>
+  <g filter="url(#shadow)">
+    <rect x="145" y="298" width="300" height="102" rx="13" fill="#f3faf6" stroke="#d8e9de"/>
+    <rect x="462" y="298" width="300" height="102" rx="13" fill="#f6f8ff" stroke="#dfe4f3"/>
+    <rect x="779" y="298" width="300" height="102" rx="13" fill="#fff9eb" stroke="#f1e4bd"/>
+    <rect x="1096" y="298" width="300" height="102" rx="13" fill="#f4f8ef" stroke="#dfe8d2"/>
+  </g>
+  <circle cx="180" cy="337" r="20" fill="#d8f0e2"/>
+  <path d="M170 341h20m-17-7 7 7 7-11" fill="none" stroke="#12814b" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="211" y="331" class="sans" font-size="13" fill="#61736a">Producción de leche</text>
+  <text x="211" y="365" class="sans" font-size="27" font-weight="700" fill="#153d2d">1.284,5 L</text>
+  <circle cx="497" cy="337" r="20" fill="#e5e9fb"/>
+  <path d="M489 340c1-8 13-8 15 0m-16 5h17m-12-15h7" fill="none" stroke="#5365a8" stroke-width="2.4" stroke-linecap="round"/>
+  <text x="528" y="331" class="sans" font-size="13" fill="#61736a">Animales activos</text>
+  <text x="528" y="365" class="sans" font-size="27" font-weight="700" fill="#273966">128</text>
+  <circle cx="814" cy="337" r="20" fill="#f8ebc7"/>
+  <path d="M814 324v14l9 5m-9-22a16 16 0 1 0 16 16" fill="none" stroke="#ba8416" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="845" y="331" class="sans" font-size="13" fill="#61736a">Vacunas pendientes</text>
+  <text x="845" y="365" class="sans" font-size="27" font-weight="700" fill="#7c5913">6</text>
+  <circle cx="1131" cy="337" r="20" fill="#e5eedc"/>
+  <path d="M1131 348v-20m0 10c-12 0-12-10-12-10s10-2 12 7m0-3c0-10 11-11 11-11s2 10-11 14" fill="none" stroke="#557b36" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="1162" y="331" class="sans" font-size="13" fill="#61736a">Cultivos activos</text>
+  <text x="1162" y="365" class="sans" font-size="27" font-weight="700" fill="#3f6227">4</text>
+
+  <text x="145" y="440" class="section sans">Producción e inventario</text>
+  <text x="145" y="463" class="sans small muted">Indicadores y existencias registradas en la finca</text>
+
+  <rect x="145" y="481" width="600" height="39" rx="7" fill="url(#brand)"/>
+  <text x="163" y="506" class="sans tablehead">PRODUCCIÓN DE LECHE · ÚLTIMOS 30 DÍAS</text>
+  <rect x="145" y="520" width="600" height="32" fill="#eaf3ed"/>
+  <text x="163" y="541" class="sans tabletext" font-weight="700">Indicador</text>
+  <text x="704" y="541" text-anchor="end" class="sans tabletext" font-weight="700">Valor</text>
+  <rect x="145" y="552" width="600" height="36" fill="#fff"/>
+  <text x="163" y="576" class="sans tabletext">Total producido</text><text x="704" y="576" text-anchor="end" class="sans tabletext">1.284,5 L</text>
+  <rect x="145" y="588" width="600" height="36" fill="#f5f8f6"/>
+  <text x="163" y="612" class="sans tabletext">Registros de ordeño</text><text x="704" y="612" text-anchor="end" class="sans tabletext">356</text>
+
+  <rect x="785" y="481" width="610" height="39" rx="7" fill="url(#brand)"/>
+  <text x="803" y="506" class="sans tablehead">ANIMALES ACTIVOS POR ESPECIE</text>
+  <rect x="785" y="520" width="610" height="32" fill="#eaf3ed"/>
+  <text x="803" y="541" class="sans tabletext" font-weight="700">Especie</text><text x="1355" y="541" text-anchor="end" class="sans tabletext" font-weight="700">Cantidad</text>
+  <rect x="785" y="552" width="610" height="36" fill="#fff"/>
+  <text x="803" y="576" class="sans tabletext">Bovinos</text><text x="1355" y="576" text-anchor="end" class="sans tabletext">94</text>
+  <rect x="785" y="588" width="610" height="36" fill="#f5f8f6"/>
+  <text x="803" y="612" class="sans tabletext">Equinos</text><text x="1355" y="612" text-anchor="end" class="sans tabletext">12</text>
+  <rect x="785" y="624" width="610" height="36" fill="#fff"/>
+  <text x="803" y="648" class="sans tabletext">Porcinos</text><text x="1355" y="648" text-anchor="end" class="sans tabletext">22</text>
+
+  <text x="145" y="696" class="section sans">Sanidad e inventarios</text>
+  <rect x="145" y="714" width="600" height="39" rx="7" fill="url(#brand)"/>
+  <text x="163" y="739" class="sans tablehead">VACUNAS</text>
+  <rect x="145" y="753" width="600" height="32" fill="#eaf3ed"/>
+  <text x="163" y="774" class="sans tabletext" font-weight="700">Estado</text><text x="704" y="774" text-anchor="end" class="sans tabletext" font-weight="700">Cantidad</text>
+  <rect x="145" y="785" width="600" height="36" fill="#fff"/>
+  <text x="163" y="809" class="sans tabletext">Pendientes</text><text x="704" y="809" text-anchor="end" class="sans tabletext">6</text>
+  <rect x="145" y="821" width="600" height="36" fill="#f5f8f6"/>
+  <text x="163" y="845" class="sans tabletext">Aplicadas</text><text x="704" y="845" text-anchor="end" class="sans tabletext">41</text>
+
+  <rect x="785" y="714" width="610" height="39" rx="7" fill="url(#brand)"/>
+  <text x="803" y="739" class="sans tablehead">MEDICAMENTOS EN INVENTARIO</text>
+  <rect x="785" y="753" width="610" height="32" fill="#eaf3ed"/>
+  <text x="803" y="774" class="sans tablehead" fill="#153d2d">Nombre</text>
+  <text x="1112" y="774" text-anchor="end" class="sans tablehead" fill="#153d2d">Cantidad</text>
+  <text x="1200" y="774" class="sans tablehead" fill="#153d2d">Unidad</text>
+  <text x="1375" y="774" text-anchor="end" class="sans tablehead" fill="#153d2d">Tipo</text>
+  <rect x="785" y="785" width="610" height="36" fill="#fff"/>
+  <text x="803" y="809" class="sans tabletext">Vitaminas ADE</text><text x="1112" y="809" text-anchor="end" class="sans tabletext">2,5</text><text x="1200" y="809" class="sans tabletext">L</text><text x="1375" y="809" text-anchor="end" class="sans tabletext">Vitamina</text>
+  <rect x="785" y="821" width="610" height="36" fill="#f5f8f6"/>
+  <text x="803" y="845" class="sans tabletext">Desparasitante</text><text x="1112" y="845" text-anchor="end" class="sans tabletext">8</text><text x="1200" y="845" class="sans tabletext">Frascos</text><text x="1375" y="845" text-anchor="end" class="sans tabletext">Sanitario</text>
+
+  <rect x="145" y="882" width="1250" height="1" fill="#e1e9e4"/>
+  <text x="145" y="915" class="sans" font-size="13" font-weight="700" letter-spacing="1.1" fill="#809087">CULTIVOS · PISCICULTURA · EQUIPOS</text>
+  <rect x="145" y="930" width="394" height="70" rx="10" fill="#f5f8f6" stroke="#e1e9e4"/>
+  <text x="165" y="958" class="sans" font-size="14" font-weight="700" fill="#153d2d">Cultivos</text>
+  <text x="165" y="982" class="sans small muted">4 activos · 2 cosechados</text>
+  <rect x="573" y="930" width="394" height="70" rx="10" fill="#f5f8f6" stroke="#e1e9e4"/>
+  <text x="593" y="958" class="sans" font-size="14" font-weight="700" fill="#153d2d">Piscicultura</text>
+  <text x="593" y="982" class="sans small muted">3 estanques activos</text>
+  <rect x="1001" y="930" width="394" height="70" rx="10" fill="#f5f8f6" stroke="#e1e9e4"/>
+  <text x="1021" y="958" class="sans" font-size="14" font-weight="700" fill="#153d2d">Equipos</text>
+  <text x="1021" y="982" class="sans small muted">12 registrados · 2 en mantenimiento</text>
+
+  <text x="145" y="1030" class="sans" font-size="12" fill="#829087">FincaControl · Reporte generado desde la información registrada</text>
+  <text x="1395" y="1030" text-anchor="end" class="sans" font-size="12" fill="#829087">Documento de muestra · Datos ilustrativos</text>
+</svg>

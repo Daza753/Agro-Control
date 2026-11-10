@@ -1,0 +1,34 @@
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+.venv/
+backend/.venv/
+backend/**/__pycache__/
+backend/**/migrations/__pycache__/
+backend/media/
+
+.bolt/
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.env
+
+# Ignore generated Electron build output and large binaries
+build_windows/
+Programa Ejecutable/
+Programa Ejecutable_temp_*/

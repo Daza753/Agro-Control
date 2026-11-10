@@ -1,0 +1,177 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1180" viewBox="0 0 1600 1180" role="img" aria-labelledby="title description">
+  <title id="title">Propuesta de plantilla profesional de Word para FincaControl</title>
+  <desc id="description">Vista previa de portada y página interior de una plantilla Word con identidad verde y dorada de FincaControl.</desc>
+  <defs>
+    <linearGradient id="forest" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#064e3b"/>
+      <stop offset="1" stop-color="#022c22"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#edbb43"/>
+      <stop offset="1" stop-color="#d89a19"/>
+    </linearGradient>
+    <filter id="shadow" x="-15%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="10" stdDeviation="13" flood-color="#152a20" flood-opacity=".14"/>
+    </filter>
+    <clipPath id="coverPanelClip">
+      <rect x="530" y="262" width="232" height="768"/>
+    </clipPath>
+    <style>
+      .sans { font-family: "Aptos", "Segoe UI", Arial, sans-serif; }
+      .serif { font-family: "Georgia", "Times New Roman", serif; }
+      .ink { fill: #1d3028; }
+      .muted { fill: #687970; }
+      .green { fill: #064e3b; }
+      .goldText { fill: #b47d12; }
+      .smallcaps { font-size: 12px; font-weight: 700; letter-spacing: 2px; }
+      .body { font-size: 15px; }
+    </style>
+  </defs>
+
+  <rect width="1600" height="1180" fill="#e9eeeb"/>
+  <rect x="36" y="28" width="1528" height="64" rx="14" fill="#fff" filter="url(#shadow)"/>
+  <rect x="57" y="45" width="30" height="30" rx="9" fill="#e9f3ed"/>
+  <path d="M72 69V52m0 9c-9 0-10-8-10-8s8-2 10 5m0-3c0-8 9-9 9-9s1 8-9 11" fill="none" stroke="#08734d" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="101" y="67" class="sans" font-size="17" font-weight="700" fill="#173c2c">FincaControl</text>
+  <text x="272" y="67" class="sans" font-size="14" fill="#7b8982">Propuesta visual · Plantilla Word</text>
+  <rect x="1332" y="44" width="207" height="33" rx="16" fill="#f3f7f4"/>
+  <text x="1436" y="65" text-anchor="middle" class="sans" font-size="12" font-weight="600" fill="#547063">VISTA PREVIA · PARA APROBACIÓN</text>
+
+  <text x="800" y="142" text-anchor="middle" class="sans" font-size="14" font-weight="700" letter-spacing="3" fill="#73847b">IDENTIDAD DE FINCACONTROL</text>
+  <text x="800" y="179" text-anchor="middle" class="serif" font-size="28" font-weight="700" fill="#173c2c">Una plantilla clara, formal y lista para editar</text>
+  <text x="800" y="207" text-anchor="middle" class="sans" font-size="15" fill="#738078">Diseño pensado para informes, actas, propuestas y documentos de la finca.</text>
+
+  <!-- Page 1: cover -->
+  <g filter="url(#shadow)">
+    <rect x="112" y="244" width="650" height="850" rx="7" fill="#fff"/>
+  </g>
+  <rect x="112" y="244" width="650" height="13" fill="url(#forest)"/>
+  <rect x="112" y="257" width="650" height="5" fill="url(#gold)"/>
+  <rect x="530" y="262" width="232" height="768" fill="url(#forest)"/>
+  <path d="M530 262h232v768H530c62-96 60-179 23-275-26-67-20-159 1-233 20-71 17-157-24-260z" fill="#08734d" opacity=".34"/>
+  <g clip-path="url(#coverPanelClip)">
+    <circle cx="711" cy="404" r="20" fill="#e2bb57" opacity=".88"/>
+    <path d="M530 548 578 453 608 500 654 421 694 487 730 446 762 480V590H530Z" fill="#718f68" opacity=".72"/>
+    <path d="m578 453 13 26-13-8-13 18zm76-32 18 31-18-9-17 19zm76 25 15 18-15-6-13 15z" fill="#e4ebd8" opacity=".78"/>
+    <path d="M530 540c39-39 77-37 113-13 28-36 71-38 119-8v96H530Z" fill="#2c7652" opacity=".92"/>
+    <path d="M530 567c45-30 82-25 113-8 41-28 79-19 119 4v45H530Z" fill="#174f3a"/>
+    <g fill="none" stroke="#d3b04c" stroke-width="2" opacity=".68">
+      <path d="M733 469v72m0-45c-16 0-23-10-24-21 14-1 22 5 24 21m0-9c14 0 22-9 23-20-14-2-22 5-23 20m-1 4c-12-1-18-7-19-16m20 9c11-1 17-7 18-15"/>
+    </g>
+    <path d="M530 758c41-22 72-20 108-3 31-17 77-16 124 5v75H530Z" fill="#11634a" opacity=".95"/>
+    <path d="M530 779c43-15 80-12 114 1 36-15 76-10 118 5" fill="none" stroke="#66c5b0" stroke-width="5" opacity=".78"/>
+    <path d="M538 795c40-10 72-7 106 5 37-11 71-6 108 7" fill="none" stroke="#c1dfc8" stroke-width="2" opacity=".72"/>
+    <g fill="none" stroke="#8dc77a" stroke-width="2.4" stroke-linecap="round">
+      <path d="M546 786v-38m0 23c-10-1-15-7-15-14 9 0 14 5 15 14m0-6c10-1 15-7 15-14-9 0-14 5-15 14"/>
+      <path d="M746 791v-46m0 28c-11-1-16-8-16-16 10 0 15 5 16 16m0-7c11-1 16-8 16-16-10 0-15 5-16 16"/>
+    </g>
+    <path d="M530 842c60 14 145 13 232-3v191H530Z" fill="#06402f" opacity=".75"/>
+    <g transform="translate(657 861)" stroke="#f1d27b" stroke-width="2">
+      <circle cx="18" cy="47" r="15" fill="#123d2e"/>
+      <circle cx="65" cy="49" r="10" fill="#123d2e"/>
+      <circle cx="18" cy="47" r="5" fill="#d9b752" stroke="none"/>
+      <circle cx="65" cy="49" r="3.5" fill="#d9b752" stroke="none"/>
+      <path d="M12 28h31l13 11h13v9H4v-8h8z" fill="#d8ad43" stroke-linejoin="round"/>
+      <path d="M32 14h17l8 25H31z" fill="#f3f5ec"/>
+      <path d="M36 17h10l4 14H34z" fill="#5f9a78" stroke="none"/>
+      <path d="M58 39h10" fill="none"/>
+    </g>
+    <g fill="none" stroke="#a3c77a" stroke-width="2.2" stroke-linecap="round">
+      <path d="M543 1006v-71m0 37c-15-1-23-10-24-21 14 0 22 7 24 21m0-8c14-2 22-10 22-21-13 0-21 7-22 21m-1 17c-13-1-19-8-20-18m21 10c13-1 20-8 21-18"/>
+      <path d="M749 1006v-78m0 42c-15-1-22-9-23-20 14 0 22 7 23 20m0-8c14-1 21-9 22-20-13 0-21 7-22 20"/>
+    </g>
+    <path d="M571 1006c6-26 8-43 8-61m0 28c-12-2-18-8-19-17 10 0 16 5 19 17m0-8c12-2 18-8 19-17-10 0-16 5-19 17" fill="none" stroke="#d9b34c" stroke-width="2.2" stroke-linecap="round"/>
+    <path d="M720 1006c-4-25-5-43-4-62m-1 30c12-2 18-8 19-18-10 0-16 5-19 18m1-8c-12-2-18-8-18-17 10 0 15 5 18 17" fill="none" stroke="#d9b34c" stroke-width="2.2" stroke-linecap="round"/>
+  </g>
+  <image href="../public/images/Oscar(1).png" x="661" y="282" width="58" height="58" preserveAspectRatio="xMidYMid meet"/>
+  <text x="690" y="355" text-anchor="middle" class="sans" font-size="8" font-weight="700" letter-spacing="1.1" fill="#e5c46e">SELLO DEL CREADOR</text>
+  <image href="../public/images/Toro%20Nelore%20frente%20a%20c%C3%A1mara.png" x="535" y="585" width="222" height="148" preserveAspectRatio="xMidYMid meet" clip-path="url(#coverPanelClip)"/>
+  <image href="../public/images/Banner%20agr%C3%ADcola%20con%20toro%20Nelore%20y%20paisaje%20tropical.png" x="530" y="262" width="232" height="768" preserveAspectRatio="xMidYMid slice" clip-path="url(#coverPanelClip)"/>
+  <g fill="none" stroke="#cda23c" stroke-width="1.4" opacity=".42">
+    <path d="M133 472v449m0-410c-13 1-20-6-21-17 12-2 20 3 21 17m0 8c14 0 21-7 22-18-13-2-21 4-22 18m0 112c-13 1-20-6-21-17 12-2 20 3 21 17m0 8c14 0 21-7 22-18-13-2-21 4-22 18m0 112c-13 1-20-6-21-17 12-2 20 3 21 17m0 8c14 0 21-7 22-18-13-2-21 4-22 18"/>
+  </g>
+  <circle cx="133" cy="470" r="3" fill="#d89a19"/>
+  <circle cx="133" cy="923" r="3" fill="#d89a19"/>
+  <image href="../public/images/logo.png" x="170" y="306" width="95" height="95" preserveAspectRatio="xMidYMid meet"/>
+  <text x="282" y="339" class="sans smallcaps green">FINCACONTROL</text>
+  <text x="282" y="366" class="sans" font-size="13" fill="#76867e">GESTIÓN AGRÍCOLA Y GANADERA</text>
+  <line x1="170" y1="430" x2="599" y2="430" stroke="#dce6df" stroke-width="1.5"/>
+  <rect x="170" y="479" width="48" height="4" rx="2" fill="url(#gold)"/>
+  <text x="170" y="521" class="sans smallcaps goldText">DOCUMENTO DE LA FINCA</text>
+  <text x="170" y="594" class="serif" font-size="43" font-weight="700" fill="#153d2d">Reporte de</text>
+  <text x="170" y="647" class="serif" font-size="43" font-weight="700" fill="#153d2d">gestión de finca</text>
+  <text x="170" y="686" class="sans" font-size="17" fill="#63746b">Título o tema del documento</text>
+  <rect x="170" y="744" width="350" height="125" rx="12" fill="#f4f8f5"/>
+  <text x="195" y="778" class="sans smallcaps" font-size="10" fill="#78877f">PREPARADO PARA</text>
+  <text x="195" y="803" class="sans" font-size="16" font-weight="600" fill="#263c31">Nombre de la finca / destinatario</text>
+  <line x1="195" y1="821" x2="495" y2="821" stroke="#dce6df"/>
+  <text x="195" y="849" class="sans" font-size="13" fill="#687970">Responsable: Nombre y cargo</text>
+  <text x="170" y="938" class="sans" font-size="14" fill="#687970">Fecha: 7 de noviembre de 2026</text>
+  <text x="170" y="967" class="sans" font-size="14" fill="#687970">Versión del documento: 1.0</text>
+  <rect x="112" y="1030" width="650" height="64" fill="url(#forest)"/>
+  <rect x="112" y="1030" width="650" height="4" fill="url(#gold)"/>
+  <image href="../public/images/Oscar(1).png" x="126" y="1040" width="42" height="42" preserveAspectRatio="xMidYMid meet"/>
+  <text x="177" y="1058" class="sans" font-size="11" fill="#d2e3d9">Creado por</text>
+  <text x="177" y="1074" class="sans" font-size="12" font-weight="600" fill="#fff">Oscar David Vega Daza</text>
+  <text x="704" y="1068" text-anchor="end" class="sans" font-size="11" fill="#b9d1c3">FINCACONTROL</text>
+  <text x="437" y="1127" text-anchor="middle" class="sans" font-size="13" font-weight="600" fill="#687970">PORTADA · 01</text>
+
+  <!-- Page 2: content -->
+  <g filter="url(#shadow)">
+    <rect x="838" y="244" width="650" height="850" rx="7" fill="#fff"/>
+  </g>
+  <rect x="838" y="244" width="650" height="7" fill="url(#forest)"/>
+  <image href="../public/images/logo.png" x="878" y="275" width="45" height="45" preserveAspectRatio="xMidYMid meet"/>
+  <image href="../public/images/Oscar(1).png" x="1405" y="270" width="34" height="34" preserveAspectRatio="xMidYMid meet"/>
+  <text x="937" y="294" class="sans" font-size="13" font-weight="700" fill="#173c2c">FINCACONTROL</text>
+  <text x="937" y="312" class="sans" font-size="10" fill="#75847c">GESTIÓN AGRÍCOLA Y GANADERA</text>
+  <text x="1448" y="302" text-anchor="end" class="sans" font-size="10" fill="#76867e">NOMBRE DEL DOCUMENTO</text>
+  <line x1="878" y1="340" x2="1448" y2="340" stroke="#dce6df"/>
+  <path d="M856 375v602m0-551c-8 1-12-4-13-11 8-1 12 2 13 11m0 5c8 0 13-4 13-12-8-1-13 3-13 12m0 150c-8 1-12-4-13-11 8-1 12 2 13 11m0 5c8 0 13-4 13-12-8-1-13 3-13 12m0 150c-8 1-12-4-13-11 8-1 12 2 13 11m0 5c8 0 13-4 13-12-8-1-13 3-13 12" fill="none" stroke="#cda23c" stroke-width="1.2" opacity=".62"/>
+  <path d="M1470 375v602" stroke="#0d6b49" stroke-width="1.2" opacity=".3"/>
+  <circle cx="1470" cy="390" r="3" fill="#d89a19" opacity=".7"/>
+  <circle cx="1470" cy="962" r="3" fill="#d89a19" opacity=".7"/>
+
+  <text x="878" y="390" class="sans smallcaps goldText">SECCIÓN 01</text>
+  <text x="878" y="423" class="serif" font-size="27" font-weight="700" fill="#153d2d">Resumen del documento</text>
+  <text x="878" y="456" class="sans body ink">Use este espacio para presentar el propósito, el alcance y las conclusiones principales</text>
+  <text x="878" y="479" class="sans body ink">del documento. El texto y los títulos quedan listos para reemplazarse en Word.</text>
+
+  <rect x="878" y="510" width="570" height="93" rx="9" fill="#f2f7f3"/>
+  <rect x="878" y="510" width="5" height="93" rx="2" fill="#138a52"/>
+  <text x="900" y="539" class="sans" font-size="12" font-weight="700" fill="#176143">PUNTO CLAVE</text>
+  <text x="900" y="563" class="sans" font-size="13" fill="#42584c">Destaque aquí una recomendación, resultado o dato importante para</text>
+  <text x="900" y="583" class="sans" font-size="13" fill="#42584c">facilitar su consulta por parte del lector.</text>
+
+  <text x="878" y="652" class="sans smallcaps goldText">SECCIÓN 02</text>
+  <text x="878" y="685" class="serif" font-size="25" font-weight="700" fill="#153d2d">Datos y seguimiento</text>
+  <text x="878" y="715" class="sans" font-size="13" fill="#52645a">Las tablas usan encabezados de alto contraste y filas alternadas:</text>
+
+  <rect x="878" y="736" width="570" height="39" rx="6" fill="url(#forest)"/>
+  <text x="897" y="761" class="sans" font-size="12" font-weight="700" fill="#fff">INDICADOR</text>
+  <text x="1120" y="761" class="sans" font-size="12" font-weight="700" fill="#fff">VALOR</text>
+  <text x="1275" y="761" class="sans" font-size="12" font-weight="700" fill="#fff">OBSERVACIÓN</text>
+  <rect x="878" y="775" width="570" height="38" fill="#f4f8f5"/>
+  <rect x="878" y="851" width="570" height="38" fill="#f4f8f5"/>
+  <text x="897" y="800" class="sans" font-size="12" fill="#263b32">Animales registrados</text>
+  <text x="1120" y="800" class="sans" font-size="12" fill="#263b32">000</text>
+  <text x="1275" y="800" class="sans" font-size="12" fill="#263b32">Actualizado</text>
+  <text x="897" y="838" class="sans" font-size="12" fill="#263b32">Producción / actividad</text>
+  <text x="1120" y="838" class="sans" font-size="12" fill="#263b32">000,0</text>
+  <text x="1275" y="838" class="sans" font-size="12" fill="#263b32">Periodo indicado</text>
+  <text x="897" y="876" class="sans" font-size="12" fill="#263b32">Pendientes por revisar</text>
+  <text x="1120" y="876" class="sans" font-size="12" fill="#263b32">00</text>
+  <text x="1275" y="876" class="sans" font-size="12" fill="#263b32">En seguimiento</text>
+  <line x1="878" y1="813" x2="1448" y2="813" stroke="#e0e8e2"/>
+  <line x1="878" y1="851" x2="1448" y2="851" stroke="#e0e8e2"/>
+  <line x1="878" y1="889" x2="1448" y2="889" stroke="#e0e8e2"/>
+
+  <text x="878" y="938" class="sans smallcaps goldText">SECCIÓN 03</text>
+  <text x="878" y="968" class="serif" font-size="23" font-weight="700" fill="#153d2d">Notas y responsables</text>
+  <text x="878" y="995" class="sans" font-size="12" fill="#52645a">Incluya observaciones, acuerdos o información complementaria.</text>
+  <line x1="878" y1="1032" x2="1448" y2="1032" stroke="#dce6df"/>
+  <image href="../public/images/Oscar(1).png" x="878" y="1040" width="25" height="25" preserveAspectRatio="xMidYMid meet"/>
+  <text x="910" y="1058" class="sans" font-size="10" fill="#7b8982">FincaControl · Documento editable · Soporte: enterprisesystemsvegadaza@gmail.com</text>
+  <text x="1448" y="1058" text-anchor="end" class="sans" font-size="10" font-weight="600" fill="#547063">PÁGINA 02</text>
+  <text x="1163" y="1127" text-anchor="middle" class="sans" font-size="13" font-weight="600" fill="#687970">PÁGINA INTERIOR · 02</text>
+</svg>

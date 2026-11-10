@@ -1,0 +1,337 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+@layer utilities {
+  .border-3 {
+    border-width: 3px;
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.4s ease-out;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .animate-slide-in-left {
+    animation: slideInLeft 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slideInLeft {
+    from {
+      transform: translateX(-100%);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Module theme classes - driven by CSS variables from ThemeScope */
+.mt-scope .mt-card {
+  background-color: var(--mt-card-bg);
+  border: 1px solid var(--mt-card-border);
+  border-radius: var(--mt-card-radius);
+  padding: var(--mt-card-padding);
+  box-shadow: var(--mt-card-shadow);
+}
+
+.mt-scope [class~="bg-white"].rounded-2xl,
+.mt-scope [class~="bg-white"].rounded-xl {
+  background-color: var(--mt-card-bg);
+  border-color: var(--mt-card-border);
+  border-radius: var(--mt-card-radius);
+  padding: var(--mt-card-padding);
+  box-shadow: var(--mt-card-shadow);
+}
+
+.mt-scope .mt-button-primary {
+  background-color: var(--mt-accent);
+}
+.mt-scope .mt-button-primary:hover {
+  background-color: color-mix(in srgb, var(--mt-accent) 85%, black);
+}
+
+.mt-scope h1:not(.text-white),
+.mt-scope h2:not(.text-white),
+.mt-scope h3:not(.text-white),
+.mt-scope h4:not(.text-white) {
+  font-size: var(--mt-heading-size);
+  color: var(--mt-heading-color);
+}
+
+.mt-scope input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]):not([type="file"]),
+.mt-scope select,
+.mt-scope textarea {
+  border-color: var(--mt-card-border);
+  border-radius: var(--mt-card-radius);
+  background-color: var(--mt-card-bg);
+  color: var(--mt-heading-color);
+}
+
+.mt-scope input::placeholder,
+.mt-scope textarea::placeholder {
+  color: var(--mt-text-color);
+}
+
+.mt-scope table tbody tr {
+  transition: background-color 0.15s ease;
+}
+.mt-scope table tbody tr:hover {
+  background-color: var(--mt-table-hover-bg);
+}
+
+.mt-scope .mt-card-hover {
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+.mt-scope .mt-card-hover:hover {
+  box-shadow: 0 4px 12px rgb(0 0 0 / 0.1);
+}
+
+.mt-scope .mt-grid {
+  display: grid;
+  grid-template-columns: repeat(var(--mt-grid-columns), minmax(0, 1fr));
+  gap: var(--mt-grid-gap);
+}
+
+.mt-scope .mt-grid-auto {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--mt-grid-gap);
+}
+
+.mt-scope .mt-heading {
+  font-size: var(--mt-heading-size);
+  color: var(--mt-heading-color);
+  font-weight: 700;
+}
+
+.mt-scope .mt-text {
+  font-size: var(--mt-text-size);
+  color: var(--mt-text-color);
+}
+
+.mt-scope .mt-accent-bg {
+  background-color: var(--mt-accent);
+}
+
+.mt-scope .mt-accent-text {
+  color: var(--mt-accent);
+}
+
+.mt-scope .mt-accent-border {
+  border-color: var(--mt-accent);
+}
+
+.mt-scope .mt-table-header {
+  background-color: var(--mt-table-header-bg);
+}
+
+.mt-scope .mt-table-row:hover {
+  background-color: var(--mt-table-hover-bg);
+}
+
+.mt-scope .mt-btn {
+  background-color: var(--mt-accent);
+  color: white;
+  border-radius: var(--mt-card-radius);
+  padding: 0.625rem 1rem;
+  font-size: var(--mt-text-size);
+  font-weight: 500;
+  transition: opacity 0.2s ease;
+}
+.mt-scope .mt-btn:hover {
+  opacity: 0.9;
+}
+
+.mt-scope .mt-btn-outline {
+  border: 1px solid var(--mt-card-border);
+  background-color: var(--mt-card-bg);
+  color: var(--mt-heading-color);
+  border-radius: var(--mt-card-radius);
+  padding: 0.625rem 1rem;
+  font-size: var(--mt-text-size);
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+.mt-scope .mt-btn-outline:hover {
+  background-color: var(--mt-table-hover-bg);
+}
+
+.mt-scope .mt-icon-tile {
+  border-radius: var(--mt-card-radius);
+  background-color: var(--mt-accent);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mt-scope .mt-input {
+  border: 1px solid var(--mt-card-border);
+  border-radius: var(--mt-card-radius);
+  background-color: var(--mt-card-bg);
+  color: var(--mt-heading-color);
+  padding: 0.625rem 0.875rem;
+  font-size: var(--mt-text-size);
+}
+.mt-scope .mt-input:focus {
+  outline: none;
+  border-color: var(--mt-accent);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--mt-accent) 30%, transparent);
+}
+
+.app-theme-dark {
+  color-scheme: dark;
+  background-color: #0f172a;
+  color: #e2e8f0;
+}
+
+.app-theme-dark main {
+  background-color: #0f172a;
+}
+
+.app-theme-dark .app-footer {
+  background-color: #1e293b;
+  border-color: #334155;
+}
+
+.app-theme-dark .app-footer .text-slate-500 {
+  color: #94a3b8;
+}
+
+.app-theme-dark main .bg-white {
+  background-color: #1e293b;
+}
+
+.app-theme-dark main .bg-slate-50,
+.app-theme-dark main .hover\:bg-slate-50:hover {
+  background-color: #0f172a;
+}
+
+.app-theme-dark main .bg-slate-100,
+.app-theme-dark main .hover\:bg-slate-100:hover {
+  background-color: #334155;
+}
+
+.app-theme-dark main .bg-slate-200 {
+  background-color: #475569;
+}
+
+.app-theme-dark main .bg-emerald-50,
+.app-theme-dark main .hover\:bg-emerald-50:hover {
+  background-color: #064e3b;
+}
+
+.app-theme-dark main .bg-emerald-100,
+.app-theme-dark main .hover\:bg-emerald-100:hover {
+  background-color: #065f46;
+}
+
+.app-theme-dark main .bg-amber-50 {
+  background-color: #451a03;
+}
+
+.app-theme-dark main .bg-amber-100,
+.app-theme-dark main .hover\:bg-amber-100:hover {
+  background-color: #78350f;
+}
+
+.app-theme-dark main .text-amber-950,
+.app-theme-dark main .text-amber-900 {
+  color: #fef3c7;
+}
+
+.app-theme-dark main .bg-red-50 {
+  background-color: #450a0a;
+}
+
+.app-theme-dark main .bg-blue-50 {
+  background-color: #172554;
+}
+
+.app-theme-dark main .text-slate-900,
+.app-theme-dark main .text-slate-800 {
+  color: #f1f5f9;
+}
+
+.app-theme-dark main .text-slate-700,
+.app-theme-dark main .text-slate-600 {
+  color: #cbd5e1;
+}
+
+.app-theme-dark main .text-slate-500,
+.app-theme-dark main .text-slate-400 {
+  color: #94a3b8;
+}
+
+.app-theme-dark main .text-emerald-800,
+.app-theme-dark main .text-emerald-700 {
+  color: #6ee7b7;
+}
+
+.app-theme-dark main .text-emerald-600 {
+  color: #34d399;
+}
+
+.app-theme-dark main .text-amber-800,
+.app-theme-dark main .text-amber-700 {
+  color: #fcd34d;
+}
+
+.app-theme-dark main .border-slate-200,
+.app-theme-dark main .border-slate-100,
+.app-theme-dark main .border-slate-50,
+.app-theme-dark main .divide-slate-100 > :not([hidden]) ~ :not([hidden]) {
+  border-color: #334155;
+}
+
+.app-theme-dark main .border-slate-300 {
+  border-color: #475569;
+}
+
+.app-theme-dark main .hover\:bg-slate-50\/50:hover {
+  background-color: rgb(51 65 85 / 0.5);
+}
