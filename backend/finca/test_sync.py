@@ -202,6 +202,90 @@ class OfflineSyncApiTests(TestCase):
         self.assertEqual(receipt.result["data"]["animal"]["id"], str(animal.pk))
         self.assertTrue(Vaccine.objects.filter(farm=self.farm, animal=animal).exists())
 
+    def test_vaccine_status_patch_succeeds_when_an_unrelated_field_changed_on_server(self):
+        vaccine = Vaccine.objects.create(
+            farm=self.farm,
+            vaccine_name="Aftosa",
+            scheduled_date="2026-11-05",
+            notes="Nota original",
+        )
+        base_state = VaccineSerializer(vaccine).data
+        vaccine.notes = "Nota actualizada en servidor"
+        vaccine.save(update_fields=("notes",))
+        operation = {
+            "id": str(uuid.uuid4()),
+            "farm_id": str(self.farm.pk),
+            "path": f"/api/vaccines/{vaccine.pk}/",
+            "method": "PATCH",
+            "body": {"status": "aplicada", "applied_date": "2026-11-05"},
+            "base_state": base_state,
+        }
+
+        response = self.client.post(self.url, {"operations": [operation]}, format="json")
+
+        result = response.data["results"][0]
+        self.assertEqual(result["status"], "applied", result)
+        vaccine.refresh_from_db()
+        self.assertEqual(vaccine.status, Vaccine.Status.APPLIED)
+        self.assertEqual(vaccine.applied_date.isoformat(), "2026-11-05")
+        self.assertEqual(vaccine.applied_by_id, self.worker.profile.pk)
+        self.assertEqual(vaccine.notes, "Nota actualizada en servidor")
+
+    def test_vaccine_status_patch_conflicts_when_status_changed_on_server(self):
+        vaccine = Vaccine.objects.create(
+            farm=self.farm,
+            vaccine_name="Aftosa",
+            scheduled_date="2026-11-05",
+            status=Vaccine.Status.PENDING,
+        )
+        base_state = VaccineSerializer(vaccine).data
+        vaccine.status = Vaccine.Status.EXPIRED
+        vaccine.save(update_fields=("status",))
+        operation = {
+            "id": str(uuid.uuid4()),
+            "farm_id": str(self.farm.pk),
+            "path": f"/api/vaccines/{vaccine.pk}/",
+            "method": "PATCH",
+            "body": {"status": Vaccine.Status.APPLIED, "applied_date": "2026-11-05"},
+            "base_state": base_state,
+        }
+
+        response = self.client.post(self.url, {"operations": [operation]}, format="json")
+
+        result = response.data["results"][0]
+        self.assertEqual(result["status"], "conflict")
+        self.assertEqual(result["server"]["status"], Vaccine.Status.EXPIRED)
+        vaccine.refresh_from_db()
+        self.assertEqual(vaccine.status, Vaccine.Status.EXPIRED)
+
+    def test_vaccine_status_patch_is_idempotent_when_server_already_has_requested_values(self):
+        vaccine = Vaccine.objects.create(
+            farm=self.farm,
+            vaccine_name="Aftosa",
+            scheduled_date="2026-11-05",
+            status=Vaccine.Status.PENDING,
+        )
+        base_state = VaccineSerializer(vaccine).data
+        vaccine.status = Vaccine.Status.APPLIED
+        vaccine.applied_date = "2026-11-05"
+        vaccine.save(update_fields=("status", "applied_date"))
+        operation = {
+            "id": str(uuid.uuid4()),
+            "farm_id": str(self.farm.pk),
+            "path": f"/api/vaccines/{vaccine.pk}/",
+            "method": "PATCH",
+            "body": {"status": Vaccine.Status.APPLIED, "applied_date": "2026-11-05"},
+            "base_state": base_state,
+        }
+
+        response = self.client.post(self.url, {"operations": [operation]}, format="json")
+
+        result = response.data["results"][0]
+        self.assertEqual(result["status"], "applied", result)
+        vaccine.refresh_from_db()
+        self.assertEqual(vaccine.status, Vaccine.Status.APPLIED)
+        self.assertEqual(vaccine.applied_date.isoformat(), "2026-11-05")
+
     def test_snapshot_contains_each_offline_resource_for_the_selected_farm(self):
         response = self.client.get("/api/sync/snapshot/")
 

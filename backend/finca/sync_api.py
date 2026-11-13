@@ -210,7 +210,16 @@ class SyncOperationsView(APIView):
                             return {"id": str(operation_id), "status": "rejected", "error": "La finca no coincide con la operación."}
                         return {**receipt.result, "status": "applied", "replayed": True}
                     current = serializer_class(instance).data
-                    if self.normalize(current) != self.normalize(base_state) and method != "DELETE":
+                    if method == "PATCH":
+                        changed_fields = (
+                            key for key in body
+                            if self.normalize(current.get(key)) != self.normalize(base_state.get(key))
+                            and self.normalize(current.get(key)) != self.normalize(body.get(key))
+                        )
+                        has_conflict = next(changed_fields, None) is not None
+                    else:
+                        has_conflict = self.normalize(current) != self.normalize(base_state)
+                    if has_conflict and method != "DELETE":
                         return {
                             "id": str(operation_id),
                             "status": "conflict",
