@@ -2,7 +2,7 @@
 
 ![Logotipo de FincaControl](../public/images/logo.png)
 
-- **Versión:** 2.2.0
+- **Versión:** 2.2.2
 - **Actualizado:** 13 de noviembre de 2026
 - **Creador y desarrollador:** Oscar David Vega Daza
 
@@ -26,7 +26,7 @@ Para soporte, consultas o reportes de errores, escriba a **enterprisesystemsvega
 
 FincaControl se puede usar en:
 
-- **Windows 10 y Windows 11 de 64 bits:** como aplicación de escritorio, usando el instalador `FincaControl Setup 2.2.0.exe` o el portable `FincaControl 2.2.0.exe`.
+- **Windows 10 y Windows 11 de 64 bits:** como aplicación de escritorio, usando el instalador `FincaControl Setup 2.2.2.exe` o el portable `FincaControl 2.2.2.exe`.
 
 ### Requisitos para usar la aplicación de escritorio
 
