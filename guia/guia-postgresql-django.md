@@ -46,9 +46,15 @@ npm ci
 npm run dev
 ```
 
-El frontend usa `VITE_API_URL` para seleccionar la API; durante el desarrollo local, si no se configura, conecta a `http://127.0.0.1:8000`. Antes de crear un instalador o portable, configura `VITE_API_URL` con una dirección alcanzable desde todos los equipos que usarán el programa. No distribuyas un paquete que apunte a `localhost` o `127.0.0.1`: en cada equipo esas direcciones señalan al propio computador.
+El frontend usa `VITE_API_URL` para seleccionar la API; durante el desarrollo local, si no se configura, conecta a `http://127.0.0.1:8000`. Los paquetes de Windows se conectan a la API pública HTTPS de Render:
 
-El empaquetado para Windows valida que `VITE_API_URL` esté configurada y rechaza direcciones loopback. Puedes definirla en el entorno de compilación o en `.env.production`. Usa HTTPS en producción. Para un equipo nuevo, el primer inicio de sesión requiere conexión al servicio, pero no una sesión previa en ese equipo.
+```powershell
+$env:VITE_API_URL_INSTALLER = "https://agro-control-7f5z.onrender.com"
+$env:VITE_API_URL_PORTABLE = "https://agro-control-7f5z.onrender.com"
+npm run build:windows
+```
+
+El script construye cada paquete con su propia URL de API y rechaza direcciones loopback para que el ejecutable no intente conectarse al mismo equipo cliente. Para un equipo nuevo, el primer inicio de sesión requiere conexión al servicio, pero no una sesión previa en ese equipo.
 
 ## Preparar el backend en Render
 
@@ -64,7 +70,7 @@ FincaControl sigue siendo una aplicación de escritorio: Render aloja la API Dja
    - `DJANGO_DEBUG`: `false`.
    - `CORS_ALLOWED_ORIGINS`: `null` para el cliente Electron empaquetado. No habilites orígenes generales.
    - `DJANGO_ALLOWED_HOSTS`: opcional; la configuración incorpora automáticamente el dominio asignado por Render mediante `RENDER_EXTERNAL_HOSTNAME`. Si lo defines, usa el host del servicio, no una URL completa.
-6. Despliega el servicio y revisa los logs. La URL pública HTTPS del servicio será la dirección de la API. Configura `VITE_API_URL` con esa URL HTTPS al compilar el cliente Windows 2.1.2.
+6. Despliega el servicio y revisa los logs. La URL pública HTTPS del servicio será la dirección de la API. Configura `VITE_API_URL_INSTALLER` y `VITE_API_URL_PORTABLE` con esa URL al compilar los paquetes Windows.
 
 El servicio crea el esquema al iniciarse ejecutando las migraciones Django. Para pasar los registros PostgreSQL locales, primero respalda la base origen y verifica el archivo de respaldo; luego importa los datos a la base de Render de acuerdo con su versión de PostgreSQL. No pegues la URL de base de datos, contraseña ni clave Django en GitHub ni en el instalador.
 

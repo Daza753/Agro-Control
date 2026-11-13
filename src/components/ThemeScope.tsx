@@ -1,6 +1,8 @@
 import { ReactNode } from 'react';
 import { DEFAULT_THEME, useModuleTheme, ModuleKey } from '../lib/moduleThemes';
 import { useSettings } from '../lib/settings';
+import { ensureReadableTextColor, getContrastingTextColor } from '../lib/colors';
+import { ModuleLayoutDisplay } from './ModuleLayoutDisplay';
 
 const SHADOW_MAP: Record<string, string> = {
   none: 'none',
@@ -57,6 +59,10 @@ export function ThemeScope({ moduleKey, children }: ThemeScopeProps) {
   const tableHoverBackground = isDark && theme.table_row_hover_bg === DEFAULT_THEME.table_row_hover_bg
     ? '#334155'
     : theme.table_row_hover_bg;
+  const readableHeadingColor = ensureReadableTextColor(headingColor, cardBackground);
+  const readableTextColor = ensureReadableTextColor(textColor, cardBackground);
+  const readableTableTextColor = ensureReadableTextColor(readableTextColor, tableHeaderBackground);
+  const accentTextColor = getContrastingTextColor(theme.accent_color);
 
   const styleVars: ThemeStyle = {
     '--mt-card-radius': theme.card_radius,
@@ -67,13 +73,26 @@ export function ThemeScope({ moduleKey, children }: ThemeScopeProps) {
     '--mt-grid-columns': theme.grid_columns,
     '--mt-grid-gap': gap,
     '--mt-heading-size': theme.heading_size,
-    '--mt-heading-color': headingColor,
+    '--mt-heading-color': readableHeadingColor,
     '--mt-text-size': theme.body_text_size,
-    '--mt-text-color': textColor,
+    '--mt-text-color': readableTextColor,
     '--mt-accent': theme.accent_color,
+    '--mt-accent-readable': ensureReadableTextColor(theme.accent_color, cardBackground),
+    '--mt-accent-text': accentTextColor,
     '--mt-table-header-bg': tableHeaderBackground,
+    '--mt-table-text-color': readableTableTextColor,
     '--mt-table-hover-bg': tableHoverBackground,
   };
 
-  return <div style={styleVars} className="mt-scope">{children}</div>;
+  return (
+    <div style={styleVars} className="mt-scope">
+      <ModuleLayoutDisplay
+        layoutConfig={theme.layout_config}
+        theme={theme}
+        isDark={isDark}
+        logoUrl={settings?.logo_url}
+        content={children}
+      />
+    </div>
+  );
 }

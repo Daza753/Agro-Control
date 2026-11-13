@@ -438,6 +438,7 @@ class ModuleTheme(models.Model):
     table_header_bg = models.CharField(max_length=30, default="#f8fafc")
     table_row_hover_bg = models.CharField(max_length=30, default="#f8fafc")
     density = models.CharField(max_length=20, choices=Density.choices, default=Density.NORMAL)
+    layout_config = models.JSONField(default=dict, blank=True)
     updated_at = models.DateTimeField(auto_now=True)
     updated_by = models.ForeignKey(
         Profile,

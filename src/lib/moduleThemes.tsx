@@ -2,6 +2,7 @@ import { createContext, useContext, useState, useEffect, ReactNode } from 'react
 import { useAuth } from './auth';
 import { apiRequest, getActiveFarmId } from './api';
 import type { ModuleTheme } from './types';
+import { createDefaultModuleLayout } from './moduleLayout';
 
 export type ModuleKey =
   | 'dashboard' | 'animals' | 'milk' | 'vaccines' | 'medications'
@@ -26,6 +27,7 @@ const DEFAULT_THEME: ModuleTheme = {
   table_header_bg: '#f8fafc',
   table_row_hover_bg: '#f8fafc',
   density: 'normal',
+  layout_config: createDefaultModuleLayout(),
   updated_at: '',
   updated_by: null,
 };

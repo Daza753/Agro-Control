@@ -1,0 +1,580 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Propuesta visual aprobada - FincaControl</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f2f4ee; color: #1b3029; font: 14px "Segoe UI", sans-serif; }
+    .app { display: grid; grid-template-columns: 230px 1fr; min-height: 100vh; }
+    aside { background: #153b32; color: #dce8df; padding: 22px 14px; display: flex; flex-direction: column; }
+    .brand { display: flex; align-items: center; gap: 11px; padding: 4px 8px 26px; }
+    .brand-logo { width: 42px; height: 42px; flex: 0 0 42px; border-radius: 9px; background: #fff; object-fit: contain; }
+    .brand small { display: block; color: #a8beb2; font-size: 10px; margin-top: 3px; }
+    .group { color: #91aa9c; font-size: 10px; letter-spacing: 1px; margin: 16px 10px 8px; }
+    nav div { padding: 11px 12px; margin: 3px 0; border-radius: 10px; color: #c5d5cb; cursor: pointer; }
+    nav .active { background: #285747; color: #fff; box-shadow: inset 3px 0 #d9ad5e; }
+    .foot { margin-top: auto; border-top: 1px solid #31574b; padding: 18px 8px 2px; color: #b5c8bb; font-size: 11px; }
+    main { min-width: 0; }
+    header { height: 68px; background: #fff; border-bottom: 1px solid #e4e9e1; display: flex; align-items: center; justify-content: space-between; padding: 0 30px; }
+    .muted { color: #77857d; font-size: 11px; }
+    .online { color: #24704c; background: #e8f5eb; border-radius: 20px; padding: 8px 12px; font-size: 11px; font-weight: 700; }
+    .avatar { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; color: #256046; background: #dbecdf; font-weight: 750; }
+    .right { display: flex; align-items: center; gap: 14px; }
+    .content { max-width: 1340px; margin: auto; padding: 26px 30px 34px; }
+    .welcome { display: flex; justify-content: space-between; align-items: end; gap: 16px; margin-bottom: 20px; }
+    .eyebrow { color: #8a7150; font-size: 10px; font-weight: 750; letter-spacing: 1.1px; }
+    h1 { font-size: 27px; letter-spacing: -.5px; margin: 5px 0 4px; color: #18382f; }
+    h3 { font-size: 15px; margin: 0; color: #1d3c31; }
+    button { border: 0; border-radius: 9px; background: #187451; color: white; padding: 11px 15px; font-weight: 700; }
+    .gold { background: #d7ac5d; color: #20392f; }
+    .metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+    .metric, .panel { background: #fff; border: 1px solid #e5e9e2; border-radius: 15px; padding: 17px; box-shadow: 0 3px 12px #173a2b08; }
+    .metric-top { display: flex; justify-content: space-between; color: #718078; font-size: 11px; }
+    .icon { width: 32px; height: 32px; border-radius: 10px; background: #edf5ee; display: grid; place-items: center; color: #397153; }
+    .num { font-size: 25px; font-weight: 750; margin: 13px 0 3px; color: #1a3b30; }
+    .grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 14px; margin-top: 14px; }
+    .head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px; }
+    .chart { height: 142px; display: flex; align-items: end; gap: 15px; padding: 5px 12px 0; border-bottom: 1px solid #e8eee8; }
+    .bar { flex: 1; background: linear-gradient(#b6d2b7,#e1eee0); border-radius: 7px 7px 0 0; position: relative; }
+    .bar:last-child { background: linear-gradient(#d9b766,#f1e8cd); }
+    .bar i { position: absolute; top: -19px; left: 50%; transform: translateX(-50%); font-style: normal; font-size: 9px; color: #537b5b; white-space: nowrap; }
+    .days { display: flex; justify-content: space-around; padding: 8px 0 0; color: #7e8b82; font-size: 10px; }
+    .vax { display: flex; gap: 10px; align-items: center; padding: 12px 0; border-bottom: 1px solid #edf0eb; }
+    .vax:last-child { border: 0; }
+    .vax-info { flex: 1; font-size: 11px; }
+    .vax-info b { display: block; font-size: 12px; margin-bottom: 3px; }
+    .tag { border-radius: 18px; padding: 5px 8px; background: #fff2d6; color: #9a6a18; font-size: 9px; font-weight: 700; }
+    .tag.red { background: #fce8e2; color: #a95036; }
+    .bottom { display: grid; grid-template-columns: 1.25fr 1fr; gap: 14px; margin-top: 14px; }
+    .activity { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #edf0eb; font-size: 11px; }
+    .settings { background: #f8f8f2; border: 1px solid #e7e5d8; border-radius: 12px; padding: 13px; }
+    .row { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; color: #63746a; font-size: 10px; }
+    .select { background: white; border: 1px solid #e5e9e2; border-radius: 7px; padding: 7px 9px; color: #315b45; }
+    .swatches { display: flex; gap: 7px; }
+    .sw { width: 16px; height: 16px; border-radius: 50%; border: 2px solid white; box-shadow: 0 0 0 1px #ccd5ca; }
+    .selected { box-shadow: 0 0 0 2px #c79d4f; }
+    .note { color: #77857d; font-size: 10px; line-height: 1.45; margin-top: 12px; }
+    .view[hidden] { display: none; }
+    .settings-tabs { display: flex; gap: 7px; border-bottom: 1px solid #e4e9e1; margin: 20px 0; overflow-x: auto; }
+    .settings-tabs span, .settings-tabs button { padding: 11px 13px; white-space: nowrap; color: #76847b; font-size: 11px; background: transparent; box-shadow: none; border-radius: 0; font-weight: 400; }
+    .settings-tabs .chosen { color: #187451; border-bottom: 2px solid #d5aa5e; font-weight: 750; }
+    .control-panel { background: white; border: 1px solid #e5e9e2; border-radius: 15px; padding: 18px; margin-bottom: 14px; }
+    .modules { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 13px; }
+    .module { border: 1px solid #e1e7df; background: #fff; color: #617267; padding: 8px 11px; border-radius: 9px; font-size: 10px; font-weight: 400; box-shadow: none; }
+    .module.selected { background: #eaf3eb; border-color: #9cbea4; color: #1d6848; font-weight: 700; }
+    .control-title { font-size: 12px; font-weight: 700; margin-bottom: 12px; color: #263d32; }
+    .designer { display: grid; grid-template-columns: 175px minmax(330px, 1fr) 220px; gap: 12px; align-items: start; }
+    .editor-panel { padding: 14px; min-width: 0; }
+    .component-library { max-height: calc(100vh - 190px); overflow-y: auto; position: sticky; top: 14px; }
+    .palette-category { margin: 13px 0 5px; color: #8a7150; font-size: 9px; letter-spacing: .8px; font-weight: 750; }
+    .palette-item { display: block; width: 100%; margin: 8px 0; padding: 10px; text-align: left; color: #294638; background: #f5f8f3; border: 1px solid #e3eae1; box-shadow: none; font-size: 10px; }
+    .palette-item small { display: block; margin-top: 4px; color: #77857d; font-weight: 400; }
+    .canvas-toolbar { display: flex; justify-content: space-between; gap: 8px; align-items: center; margin-bottom: 10px; }
+    .canvas-toolbar button { font-size: 9px; padding: 7px 9px; }
+    .design-canvas { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 10px; min-height: 390px; padding: 12px; border: 1px dashed #b9c9b9; border-radius: 12px; background: #f4f6f1; align-content: start; }
+    .designer-widget { grid-column: span 6; min-width: 0; min-height: 105px; padding: 12px; border: 1px solid #dfe7dd; border-radius: var(--widget-radius, 12px); background: var(--widget-bg, var(--widget-default-bg, #fff)); color: var(--widget-text-color, var(--widget-default-text, #64746a)); cursor: grab; touch-action: none; box-shadow: 0 2px 7px #173a2b0a; }
+    .designer-widget:active { cursor: grabbing; }
+    .designer-widget.selected { outline: 2px solid #d3a753; outline-offset: 1px; }
+    .widget-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; font-size: 9px; }
+    .widget-handle { color: #819087; cursor: grab; }
+    .remove-widget { padding: 3px 7px; border-radius: 6px; background: #f7eeeb; color: #9e533d; box-shadow: none; }
+    .widget-title { color: var(--widget-title-color, var(--widget-default-title, #1d3c31)); font-family: inherit; font-size: var(--widget-title-size, 14px); margin: 0 0 7px; }
+    .widget-body { color: var(--widget-text-color, var(--widget-default-text, #68786e)); font-size: var(--widget-body-size, 10px); line-height: 1.5; }
+    .widget-badge { display: inline-block; margin-top: 7px; padding: 4px 8px; border-radius: 20px; background: #fff1d2; color: #956b25; font-size: 9px; }
+    .widget-bars { height: 48px; display: flex; align-items: end; gap: 7px; margin-top: 10px; }
+    .widget-bars i { flex: 1; background: #c6ddc7; border-radius: 4px 4px 0 0; }
+    .widget-bars i:last-child { background: #dec581; }
+    .widget-pie { width: 52px; height: 52px; margin-top: 9px; border-radius: 50%; background: conic-gradient(#27754f 0 48%, #d5ad5d 48% 76%, #a9c5ab 76% 100%); }
+    .inspector-label { display: block; margin: 11px 0 5px; color: #65756a; font-size: 10px; font-weight: 650; }
+    .inspector-input, .inspector-select { width: 100%; min-width: 0; padding: 8px; border: 1px solid #dfe6dc; border-radius: 7px; background: white; color: #33493c; font: inherit; font-size: 10px; }
+    .color-control { height: 33px; padding: 3px; }
+    .range-line { display: flex; align-items: center; gap: 8px; }
+    .range-line input { min-width: 0; width: 100%; accent-color: #287452; }
+    .range-line output { min-width: 30px; color: #52665a; font-size: 10px; }
+    .move-controls { display: flex; gap: 6px; margin-top: 12px; }
+    .move-controls button { flex: 1; padding: 7px 4px; font-size: 9px; }
+    .danger-button { width: 100%; margin-top: 9px; background: #fbefec; color: #99513c; box-shadow: none; font-size: 10px; }
+    .editor-status { min-height: 28px; margin: 9px 0 0; color: #55705e; font-size: 10px; line-height: 1.4; }
+    .theme-options { display: flex; gap: 9px; margin: 12px 0 18px; }
+    .theme-option { min-width: 105px; padding: 10px 14px; background: #f5f7f3; color: #52665a; border: 1px solid #dfe6dc; box-shadow: none; }
+    .theme-option.active { background: #e8f3e9; border-color: #428365; color: #1c6848; }
+    .theme-preview { max-width: 460px; padding: 18px; border: 1px solid #dfe7dd; border-radius: 12px; background: #f4f6f1; }
+    .theme-preview-card { margin-top: 10px; padding: 14px; border-radius: 10px; background: #fff; color: #52665a; box-shadow: 0 2px 8px #173a2b10; }
+    .theme-preview-card b { display: block; margin-bottom: 5px; color: #1d3c31; }
+    body { --widget-default-bg: #ffffff; --widget-default-title: #1d3c31; --widget-default-text: #68786e; }
+    body[data-theme="dark"] { --widget-default-bg: #22352a; --widget-default-title: #f1f7f2; --widget-default-text: #cad8ce; background: #101914; color: #e8f0ea; }
+    body[data-theme="dark"] header, body[data-theme="dark"] .metric, body[data-theme="dark"] .panel, body[data-theme="dark"] .control-panel, body[data-theme="dark"] .settings-tabs { background: #19271f; border-color: #35483a; color: #e8f0ea; }
+    body[data-theme="dark"] .content { background: #101914; }
+    body[data-theme="dark"] h1, body[data-theme="dark"] h3, body[data-theme="dark"] .metric .num, body[data-theme="dark"] .control-title { color: #eff6f0; }
+    body[data-theme="dark"] .muted, body[data-theme="dark"] .note, body[data-theme="dark"] .control-row, body[data-theme="dark"] .inspector-label,
+    body[data-theme="dark"] .metric-top, body[data-theme="dark"] .days, body[data-theme="dark"] .farm-info span, body[data-theme="dark"] .editor-status { color: #c5d5c9; }
+    body[data-theme="dark"] .eyebrow, body[data-theme="dark"] .palette-category { color: #e6ca82; }
+    body[data-theme="dark"] .widget-handle { color: #c5d5c9; }
+    body[data-theme="dark"] .farm-info b { color: #eff6f0; }
+    body[data-theme="dark"] .manage-farms { color: #a7e2bb; }
+    body[data-theme="dark"] .settings-tabs button, body[data-theme="dark"] .settings-tabs span { color: #bdcbbf; }
+    body[data-theme="dark"] .settings-tabs .chosen { color: #a7e2bb; }
+    body[data-theme="dark"] .design-canvas { background: #101914; border-color: #496352; }
+    body[data-theme="dark"] .designer-widget { border-color: #405847; }
+    body[data-theme="dark"] .widget-body strong { color: #f1f7f2 !important; }
+    body[data-theme="dark"] .palette-item, body[data-theme="dark"] .inspector-input, body[data-theme="dark"] .inspector-select, body[data-theme="dark"] .select { background: #22352a; color: #edf5ef; border-color: #405847; }
+    body[data-theme="dark"] .module { background: #22352a; color: #d3e1d6; border-color: #405847; }
+    body[data-theme="dark"] .module.selected { background: #2c4b38; color: #eaffee; }
+    body[data-theme="dark"] .secondary, body[data-theme="dark"] .theme-option { background: #2a3c31; color: #e6f0e8; border-color: #506a57; }
+    body[data-theme="dark"] .theme-option.active { background: #315940; border-color: #7ab891; color: #f1fff4; }
+    body[data-theme="dark"] .theme-preview { background: #121b16; border-color: #405847; }
+    body[data-theme="dark"] .theme-preview-card { background: #22352a; color: #d3e1d6; }
+    body[data-theme="dark"] .theme-preview-card b { color: #f1f7f2; }
+    body[data-theme="dark"] .farm-card { background: #19271f; border-color: #405847; }
+    .actions { display: flex; justify-content: end; gap: 8px; flex-wrap: wrap; }
+    .actions button { font-size: 9px; padding: 9px 11px; }
+    .secondary { color: #486153; background: #f2f5f0; box-shadow: none; }
+    .farm-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+    .farm-card { border: 1px solid #e3e9e1; border-radius: 11px; overflow: hidden; background: white; }
+    .farm-card.active { border: 2px solid #2e805c; box-shadow: 0 0 0 3px #2e805c18; }
+    .farm-art { height: 66px; background: linear-gradient(135deg,#d9e7d2,#aac9ac 55%,#d3bd7e); position: relative; }
+    .farm-art.second { background: linear-gradient(135deg,#e7dfc7,#c1d3a8 50%,#8ca888); }
+    .farm-state { position: absolute; right: 7px; top: 7px; background: #e8f5eb; color: #24704c; border-radius: 14px; padding: 4px 7px; font-size: 8px; font-weight: 750; }
+    .farm-info { padding: 9px 10px; display: flex; justify-content: space-between; align-items: center; gap: 6px; }
+    .farm-info b { font-size: 10px; }
+    .farm-info span { font-size: 9px; color: #718078; }
+    .manage-farms { color: #187451; font-size: 10px; font-weight: 700; background: transparent; padding: 8px 0; box-shadow: none; }
+    @media(max-width:1100px) { .designer{grid-template-columns:170px minmax(280px,1fr)}.inspector-panel{grid-column:1 / -1}.inspector-panel .inspector-fields{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 12px}.inspector-panel .move-controls,.inspector-panel .danger-button{max-width:260px}.component-library{position:static;max-height:520px} }
+    @media(max-width:850px) { .app{grid-template-columns:64px 1fr} aside{padding:18px 7px}.brand{justify-content:center;padding:4px 0 18px}.brand div:last-child,.group,nav span,.foot{display:none}nav div{text-align:center;padding:12px 4px}.metrics{grid-template-columns:repeat(2,1fr)}.grid,.bottom{grid-template-columns:1fr}.content{padding:20px}.chart{height:120px} }
+    @media(max-width:700px) { .designer{grid-template-columns:1fr}.inspector-panel{grid-column:auto}.inspector-panel .inspector-fields{display:block}.canvas-toolbar{align-items:flex-start;flex-direction:column}.design-canvas{min-height:320px;padding:8px;gap:7px} }
+    @media(max-width:540px) { .app{display:block}aside{display:none}header{padding:0 14px;height:58px}.content{padding:16px 12px}.welcome{align-items:start;flex-direction:column}h1{font-size:23px}.metric{padding:12px}.right{gap:7px}.right .name{display:none}.designer-widget{grid-column:span 12!important} }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside>
+      <div class="brand"><img class="brand-logo" src="../../public/images/logo.png" alt="Logo oficial de FincaControl"><div><b>FincaControl</b><small>GESTIÓN AGROPECUARIA</small></div></div>
+      <div class="group">GESTIÓN</div>
+      <nav>
+        <div class="active" id="nav-home" role="button" tabindex="0" onclick="showView('home')">⌂　Inicio</div>
+        <div>♧　Animales</div><div>◉　Producción de leche</div><div>✚　Vacunas</div><div>✚　Medicamentos</div>
+        <div>▣　Insumos</div><div>⚒　Equipos</div><div>♨　Cultivos</div><div>🐟　Piscicultura</div>
+        <div>▤　Actividades</div><div>✚　Enfermedades</div><div>▧　Reportes</div>
+      </nav>
+      <div class="group">ADMINISTRACIÓN</div><nav>
+        <div>♙　Usuarios</div><div id="nav-farms" role="button" tabindex="0" onclick="showView('farms')">♧　Fincas</div>
+        <div id="nav-settings" role="button" tabindex="0" onclick="showView('settings')">⚙　Configuración</div><div>ⓘ　Ayuda e información</div>
+      </nav>
+      <div class="foot">● Sesión protegida<br><br>Offline listo para sincronizar</div>
+    </aside>
+    <main>
+      <header><div><div class="muted">Finca seleccionada</div><b id="active-farm-name">Hacienda La Esperanza</b></div><div class="right"><span class="online">● En línea</span><span class="avatar">OV</span><span class="name">Oscar Vega</span></div></header>
+      <div class="content">
+       <div id="home-view" class="view">
+        <section class="welcome"><div><div class="eyebrow">PROPUESTA VISUAL · DATOS ILUSTRATIVOS</div><h1>Buenos días, Oscar</h1><div class="muted">Así va tu finca hoy. Aquí tienes lo importante para comenzar.</div></div><button>＋　Registrar actividad</button></section>
+        <section class="panel" style="margin-bottom:14px"><div class="head" style="margin-bottom:10px"><div><h3>Mis fincas</h3><div class="muted" style="margin-top:4px">Elige una finca para entrar a su información.</div></div><button class="manage-farms" onclick="showView('farms')">Administrar fincas　→</button></div><div class="farm-grid"><article class="farm-card active" role="button" tabindex="0" onclick="selectFarm(this,'Hacienda La Esperanza')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectFarm(this,'Hacienda La Esperanza')}"><div class="farm-art"><span class="farm-state">✓ Seleccionada</span></div><div class="farm-info"><b>Hacienda La Esperanza</b><span>Activa</span></div></article><article class="farm-card" role="button" tabindex="0" onclick="selectFarm(this,'Finca El Porvenir')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();selectFarm(this,'Finca El Porvenir')}"><div class="farm-art second"></div><div class="farm-info"><b>Finca El Porvenir</b><span>Seleccionar →</span></div></article></div></section>
+        <section class="metrics">
+          <article class="metric"><div class="metric-top">Animales activos <span class="icon">♧</span></div><div class="num">128</div><div class="muted">+4 este mes</div></article>
+          <article class="metric"><div class="metric-top">Leche de hoy <span class="icon">◉</span></div><div class="num">246 <small style="font-size:12px">L</small></div><div class="muted">Meta diaria: 280 L</div></article>
+          <article class="metric"><div class="metric-top">Vacunas pendientes <span class="icon">✚</span></div><div class="num">8</div><div class="muted">2 requieren atención</div></article>
+          <article class="metric"><div class="metric-top">Cultivos activos <span class="icon">♧</span></div><div class="num">4</div><div class="muted">3 lotes en producción</div></article>
+        </section>
+        <section class="grid">
+          <article class="panel"><div class="head"><h3>Producción de leche</h3><span class="select">Últimos 7 días　⌄</span></div><div class="muted">Litros registrados por día</div><div class="chart"><div class="bar" style="height:62%"><i>218 L</i></div><div class="bar" style="height:72%"><i>232 L</i></div><div class="bar" style="height:65%"><i>224 L</i></div><div class="bar" style="height:80%"><i>251 L</i></div><div class="bar" style="height:74%"><i>240 L</i></div><div class="bar" style="height:91%"><i>271 L</i></div><div class="bar" style="height:83%"><i>246 L</i></div></div><div class="days"><span>Mar</span><span>Mié</span><span>Jue</span><span>Vie</span><span>Sáb</span><span>Dom</span><span>Hoy</span></div></article>
+          <article class="panel"><div class="head"><h3>Atención sanitaria</h3><button class="gold">Ver vacunas</button></div><div class="vax"><div class="vax-info"><b>Aftosa · CO-042</b><span class="muted">La Morena · vence hoy</span></div><span class="tag red">Hoy</span></div><div class="vax"><div class="vax-info"><b>Brucelosis · CO-057</b><span class="muted">Lucero · en 2 días</span></div><span class="tag">Próxima</span></div><div class="vax"><div class="vax-info"><b>Clostridiosis · CO-061</b><span class="muted">Ternero · en 5 días</span></div><span class="tag">Pendiente</span></div></article>
+        </section>
+        <section class="bottom">
+          <article class="panel"><div class="head"><h3>Actividad reciente</h3><span class="muted">Ver historial →</span></div><div class="activity"><b>Ordeño de la mañana</b><span class="muted">246 L · hace 35 min</span></div><div class="activity"><b>Registro sanitario actualizado</b><span class="muted">Vacuna · ayer</span></div></article>
+          <article class="panel"><div class="head"><h3>Seguimiento del hato</h3><span class="muted">Ver animales →</span></div><div class="activity"><b>Animales que requieren revisión</b><span class="tag">3</span></div><div class="activity"><b>Registros agregados esta semana</b><span class="tag">12</span></div></article>
+        </section>
+       </div>
+       <div id="settings-view" class="view" hidden>
+        <div class="welcome"><div><div class="eyebrow">PERSONALIZACIÓN</div><h1>Configuración</h1><div class="muted">Ajusta la apariencia general y la de cada módulo de tu finca.</div></div></div>
+        <div class="settings-tabs" role="tablist" aria-label="Configuración de apariencia">
+         <button id="tab-general" type="button" role="tab" aria-selected="false" onclick="showSettingsTab('general')">Diseño general</button>
+         <button id="tab-module" type="button" role="tab" aria-selected="true" class="chosen" onclick="showSettingsTab('module')">Diseño por módulo</button>
+         <span>Acceso a módulos</span><span>Fincas</span>
+        </div>
+        <section id="general-design-view" class="control-panel" hidden>
+         <div class="head"><div><h3>Diseño general</h3><div class="muted" style="margin-top:5px">Elige el modo de apariencia para toda la aplicación. Los diseños guardados por módulo se conservan.</div></div><span class="tag">Contraste automático activo</span></div>
+         <div class="control-title">Modo de color</div>
+         <div class="theme-options"><button id="theme-light" type="button" class="theme-option active" aria-pressed="true" onclick="setTheme('light')">☀ Claro</button><button id="theme-dark" type="button" class="theme-option" aria-pressed="false" onclick="setTheme('dark')">☾ Oscuro</button></div>
+         <div class="theme-preview"><div class="eyebrow">VISTA PREVIA DE CONTRASTE</div><div class="theme-preview-card"><b>Texto siempre visible</b><span>FincaControl adapta fondos, títulos y texto al modo elegido.</span></div></div>
+         <p id="theme-status" class="editor-status" role="status" aria-live="polite">Modo claro activado; el contraste automático está activo.</p>
+         <p class="note">Al cambiar de claro a oscuro, el fondo y los colores de texto se ajustan juntos. Si personalizas un color y pierde legibilidad, la vista previa corrige el contraste automáticamente. Esto no modifica tus datos.</p>
+        </section>
+        <div id="module-design-view">
+        <div class="control-panel"><div class="head"><div><h3>Diseño por módulo</h3><div class="muted" style="margin-top:5px">Edita visualmente cada módulo: organiza sus elementos y define su apariencia sin cambiar los datos.</div></div><span class="tag">Propuesta de editor visual</span></div><div class="modules"><button type="button" class="module">Inicio</button><button type="button" class="module">Animales</button><button type="button" class="module">Producción de leche</button><button type="button" class="module selected" aria-pressed="true">Vacunas</button><button type="button" class="module">Medicamentos</button><button type="button" class="module">Insumos</button><button type="button" class="module">Equipos</button><button type="button" class="module">Cultivos</button><button type="button" class="module">Piscicultura</button><button type="button" class="module">Actividades</button><button type="button" class="module">Enfermedades</button><button type="button" class="module">Reportes</button></div></div>
+        <div class="designer">
+         <section class="control-panel editor-panel component-library" aria-label="Biblioteca de elementos">
+          <div class="control-title">Catálogo de elementos</div>
+          <div class="palette-category">DATOS</div>
+          <button class="palette-item" onclick="addWidget('metric')">▣　Indicador<small>Tarjeta con dato principal</small></button>
+          <button class="palette-item" onclick="addWidget('table')">☷　Lista o tabla<small>Registros del módulo</small></button>
+          <button class="palette-item" onclick="addWidget('chart')">▥　Gráfico de barras<small>Comparaciones por fecha</small></button>
+          <button class="palette-item" onclick="addWidget('pie')">◔　Gráfico circular<small>Distribución por categoría</small></button>
+          <button class="palette-item" onclick="addWidget('calendar')">▦　Calendario<small>Fechas y próximos eventos</small></button>
+          <button class="palette-item" onclick="addWidget('tasks')">☑　Lista de tareas<small>Pendientes y recordatorios</small></button>
+          <button class="palette-item" onclick="addWidget('status')">●　Estado o etiquetas<small>Indicadores de situación</small></button>
+          <button class="palette-item" onclick="addWidget('filters')">⌕　Búsqueda y filtros<small>Controles de consulta</small></button>
+          <div class="palette-category">CONTENIDO</div>
+          <button class="palette-item" onclick="addWidget('heading')">T　Título y texto<small>Encabezado o descripción</small></button>
+          <button class="palette-item" onclick="addWidget('image')">▧　Imagen o logo<small>Identidad visual del módulo</small></button>
+          <button class="palette-item" onclick="addWidget('summary')">▤　Resumen informativo<small>Texto destacado</small></button>
+          <button class="palette-item" onclick="addWidget('activity')">◷　Actividad reciente<small>Últimos registros</small></button>
+          <button class="palette-item" onclick="addWidget('map')">⌖　Mapa o ubicación<small>Referencia geográfica</small></button>
+          <div class="palette-category">ACCIONES</div>
+          <button class="palette-item" onclick="addWidget('action')">＋　Acceso rápido<small>Botón para una acción frecuente</small></button>
+          <button class="palette-item" onclick="addWidget('form')">▤　Formulario rápido<small>Registro desde el módulo</small></button>
+          <p class="note">Agrega, mueve, cambia el tamaño o quita elementos del diseño.</p>
+         </section>
+         <section class="control-panel editor-panel" aria-label="Lienzo de diseño del módulo">
+          <div class="canvas-toolbar"><div><div class="control-title" style="margin-bottom:3px">Vista previa · <span id="design-module-name">Vacunas</span></div><span class="muted">Arrastra los bloques para cambiar su orden; selecciónalos para editarlos.</span></div><span class="tag">Diseño visual</span></div>
+          <div id="design-canvas" class="design-canvas" aria-label="Elementos del módulo, arrastrables">
+           <article class="designer-widget selected" tabindex="0" draggable="true" data-width="12" data-height="normal" data-shape="12px" style="grid-column:span 12"><div class="widget-top"><span class="widget-handle">⠿　Arrastrar</span><button class="remove-widget" aria-label="Quitar encabezado">×</button></div><h4 class="widget-title" data-edit-title>Calendario de vacunas</h4><div class="widget-body">Organiza las próximas aplicaciones y revisa el estado sanitario.</div></article>
+           <article class="designer-widget" tabindex="0" draggable="true" data-width="6" data-height="normal" data-shape="12px"><div class="widget-top"><span class="widget-handle">⠿　Arrastrar</span><button class="remove-widget" aria-label="Quitar indicador">×</button></div><h4 class="widget-title" data-edit-title>Vacunas pendientes</h4><div class="widget-body"><strong style="font-size:24px;color:#294638">8</strong><br>2 requieren atención</div><span class="widget-badge">Pendientes</span></article>
+           <article class="designer-widget" tabindex="0" draggable="true" data-width="6" data-height="normal" data-shape="12px"><div class="widget-top"><span class="widget-handle">⠿　Arrastrar</span><button class="remove-widget" aria-label="Quitar indicador">×</button></div><h4 class="widget-title" data-edit-title>Aplicadas este mes</h4><div class="widget-body"><strong style="font-size:24px;color:#294638">24</strong><br>Registros confirmados</div><span class="widget-badge" style="background:#e8f4eb;color:#28704d">Al día</span></article>
+           <article class="designer-widget" tabindex="0" draggable="true" data-width="12" data-height="normal" data-shape="12px" style="grid-column:span 12"><div class="widget-top"><span class="widget-handle">⠿　Arrastrar</span><button class="remove-widget" aria-label="Quitar lista">×</button></div><h4 class="widget-title" data-edit-title>Próximas aplicaciones</h4><div class="widget-body">Aftosa · CO-042　　La Morena · hoy<br>Brucelosis · CO-057　　Lucero · en 2 días</div></article>
+           <article class="designer-widget" tabindex="0" draggable="true" data-width="6" data-height="normal" data-shape="12px"><div class="widget-top"><span class="widget-handle">⠿　Arrastrar</span><button class="remove-widget" aria-label="Quitar acceso rápido">×</button></div><h4 class="widget-title" data-edit-title>Registrar aplicación</h4><div class="widget-body">Acceso rápido para confirmar una vacuna aplicada.</div><span class="widget-badge" style="background:#e7f1e8;color:#28704d">＋ Nueva aplicación</span></article>
+          </div>
+          <p class="editor-status" id="editor-status" role="status" aria-live="polite">Los cambios se muestran aquí como propuesta; todavía no se guardan en la aplicación.</p>
+          <div class="actions"><button class="secondary" onclick="resetCanvas()">Restablecer módulo</button><button class="secondary" onclick="emptyCanvas()">Vaciar lienzo</button><button class="secondary" onclick="announce('En la aplicación, esta acción solicitaría confirmación antes de aplicar el diseño a todos los módulos.')">Aplicar a todos</button><button onclick="announce('La maqueta no guarda cambios en FincaControl; primero debes aprobar e implementar el editor.')">Guardar diseño</button></div>
+         </section>
+         <aside class="control-panel editor-panel inspector-panel" aria-label="Propiedades del elemento seleccionado">
+          <div class="control-title">Apariencia del elemento</div>
+          <div id="empty-inspector" class="note" hidden>Selecciona un bloque del lienzo para personalizarlo.</div>
+          <div id="inspector-fields" class="inspector-fields">
+           <label class="inspector-label" for="widget-title-input">Texto del título</label><input id="widget-title-input" class="inspector-input" type="text">
+           <label class="inspector-label" for="widget-bg">Fondo del elemento</label><input id="widget-bg" class="inspector-input color-control" type="color" value="#ffffff">
+           <label class="inspector-label" for="widget-title-color">Color del título</label><input id="widget-title-color" class="inspector-input color-control" type="color" value="#1d3c31">
+           <label class="inspector-label" for="widget-text-color">Color del texto</label><input id="widget-text-color" class="inspector-input color-control" type="color" value="#68786e">
+           <label class="inspector-label" for="widget-font">Tipo de letra</label><select id="widget-font" class="inspector-select"><option>Segoe UI</option><option>Arial</option><option>Georgia</option><option>Verdana</option></select>
+           <label class="inspector-label" for="widget-title-size">Tamaño del título</label><div class="range-line"><input id="widget-title-size" type="range" min="12" max="24" value="14"><output id="widget-title-size-output">14 px</output></div>
+           <label class="inspector-label" for="widget-body-size">Tamaño del texto</label><div class="range-line"><input id="widget-body-size" type="range" min="9" max="18" value="10"><output id="widget-body-size-output">10 px</output></div>
+           <label class="inspector-label" for="widget-shape">Forma de las esquinas</label><select id="widget-shape" class="inspector-select"><option value="4px">Recta</option><option value="12px" selected>Suave</option><option value="24px">Redondeada</option></select>
+           <label class="inspector-label" for="widget-width">Ancho del elemento</label><select id="widget-width" class="inspector-select"><option value="4">Un tercio</option><option value="6">Mitad</option><option value="8">Dos tercios</option><option value="12">Completo</option></select>
+           <label class="inspector-label" for="widget-height">Altura</label><select id="widget-height" class="inspector-select"><option value="compact">Compacta</option><option value="normal" selected>Normal</option><option value="tall">Amplia</option></select>
+           <div class="move-controls"><button class="secondary" onclick="moveSelected(-1)" aria-label="Mover elemento hacia arriba">↑ Mover antes</button><button class="secondary" onclick="moveSelected(1)" aria-label="Mover elemento hacia abajo">↓ Mover después</button></div>
+           <button class="danger-button" onclick="removeSelected()">Quitar este elemento del diseño</button>
+          </div>
+          <p class="note">Quitar un elemento solo lo oculta del diseño; no elimina vacunas, animales ni otros registros.</p>
+         </aside>
+        </div>
+        </div>
+       </div>
+       <div id="farms-view" class="view" hidden>
+        <div class="welcome"><div><div class="eyebrow">ADMINISTRACIÓN</div><h1>Fincas del propietario</h1><div class="muted">Consulta y administra tus fincas. Cada trabajador solo accede a la finca asignada.</div></div><button onclick="showView('home')">← Volver a Inicio</button></div>
+        <div class="control-panel"><div class="control-title">Crear finca</div><div class="control-row"><span>Nombre de la finca</span><span class="select">Escribe el nombre de la finca</span><button>＋ Crear finca</button></div></div>
+        <div class="panel"><div class="head"><h3>Fincas administradas</h3><span class="tag">2 fincas</span></div><div class="vax"><div class="avatar">H</div><div class="vax-info"><b>Hacienda La Esperanza</b><span>Finca seleccionada</span></div><button class="secondary">Editar</button><button class="secondary">Eliminar</button></div><div class="vax"><div class="avatar">P</div><div class="vax-info"><b>Finca El Porvenir</b><span>Disponible para seleccionar</span></div><button class="secondary">Editar</button><button class="secondary">Eliminar</button></div><p class="note">La eliminación solicita confirmación y borra los registros asociados a esa finca.</p></div>
+       </div>
+      </div>
+    </main>
+  </div>
+  <script>
+    const designCanvas = document.getElementById('design-canvas');
+    const defaultCanvasMarkup = designCanvas.innerHTML;
+    let selectedWidget = null;
+    let pointerDrag = null;
+
+    function announce(message) {
+      document.getElementById('editor-status').textContent = message;
+    }
+
+    function currentPalette() {
+      return document.body.dataset.theme === 'dark'
+        ? { background: '#22352a', title: '#f1f7f2', text: '#cad8ce' }
+        : { background: '#ffffff', title: '#1d3c31', text: '#68786e' };
+    }
+
+    function luminance(hex) {
+      const value = hex.replace('#', '');
+      const channels = [0, 2, 4].map(index => parseInt(value.slice(index, index + 2), 16) / 255)
+        .map(channel => channel <= 0.04045 ? channel / 12.92 : ((channel + 0.055) / 1.055) ** 2.4);
+      return channels[0] * 0.2126 + channels[1] * 0.7152 + channels[2] * 0.0722;
+    }
+
+    function contrastRatio(first, second) {
+      const firstLum = luminance(first);
+      const secondLum = luminance(second);
+      return (Math.max(firstLum, secondLum) + 0.05) / (Math.min(firstLum, secondLum) + 0.05);
+    }
+
+    function readableColor(foreground, background) {
+      if (contrastRatio(foreground, background) >= 4.5) return foreground;
+      return contrastRatio('#111111', background) >= contrastRatio('#ffffff', background) ? '#111111' : '#ffffff';
+    }
+
+    function applyWidgetTheme(widget) {
+      if (!widget) return;
+      const palette = currentPalette();
+      const background = widget.dataset.bg || palette.background;
+      const titleColor = readableColor(widget.dataset.titleColor || palette.title, background);
+      const textColor = readableColor(widget.dataset.textColor || palette.text, background);
+      widget.style.setProperty('--widget-bg', background);
+      widget.style.setProperty('--widget-title-color', titleColor);
+      widget.style.setProperty('--widget-text-color', textColor);
+    }
+
+    function refreshInspector() {
+      const hasSelection = Boolean(selectedWidget);
+      document.getElementById('inspector-fields').hidden = !hasSelection;
+      document.getElementById('empty-inspector').hidden = hasSelection;
+      if (!hasSelection) return;
+
+      const palette = currentPalette();
+      document.getElementById('widget-title-input').value = selectedWidget.querySelector('[data-edit-title]').textContent;
+      document.getElementById('widget-bg').value = selectedWidget.dataset.bg || palette.background;
+      document.getElementById('widget-title-color').value = selectedWidget.dataset.titleColor || palette.title;
+      document.getElementById('widget-text-color').value = selectedWidget.dataset.textColor || palette.text;
+      document.getElementById('widget-font').value = selectedWidget.dataset.font || 'Segoe UI';
+      document.getElementById('widget-title-size').value = selectedWidget.dataset.titleSize || '14';
+      document.getElementById('widget-body-size').value = selectedWidget.dataset.bodySize || '10';
+      document.getElementById('widget-shape').value = selectedWidget.dataset.shape || '12px';
+      document.getElementById('widget-width').value = selectedWidget.dataset.width || '6';
+      document.getElementById('widget-height').value = selectedWidget.dataset.height || 'normal';
+      document.getElementById('widget-title-size-output').value = `${document.getElementById('widget-title-size').value} px`;
+      document.getElementById('widget-body-size-output').value = `${document.getElementById('widget-body-size').value} px`;
+      applyWidgetTheme(selectedWidget);
+    }
+
+    function selectWidget(widget) {
+      if (!widget || !designCanvas.contains(widget)) return;
+      if (selectedWidget) selectedWidget.classList.remove('selected');
+      selectedWidget = widget;
+      selectedWidget.classList.add('selected');
+      refreshInspector();
+    }
+
+    function removeWidget(widget) {
+      if (!widget) return;
+      const title = widget.querySelector('[data-edit-title]').textContent;
+      widget.remove();
+      if (selectedWidget === widget) selectedWidget = null;
+      refreshInspector();
+      announce(`“${title}” se quitó de la vista previa; no se borró ningún registro.`);
+    }
+
+    function bindWidget(widget) {
+      widget.draggable = false;
+      widget.addEventListener('click', event => {
+        if (event.target.closest('.remove-widget')) return;
+        selectWidget(widget);
+      });
+      widget.addEventListener('keydown', event => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          selectWidget(widget);
+        }
+      });
+      widget.addEventListener('pointerdown', event => {
+        if (event.target.closest('button')) return;
+        pointerDrag = { widget, startX: event.clientX, startY: event.clientY, moved: false };
+        widget.setPointerCapture(event.pointerId);
+        event.preventDefault();
+      });
+      widget.addEventListener('pointermove', event => {
+        if (!pointerDrag || pointerDrag.widget !== widget) return;
+        if (!pointerDrag.moved && Math.hypot(event.clientX - pointerDrag.startX, event.clientY - pointerDrag.startY) < 8) return;
+        pointerDrag.moved = true;
+        const target = document.elementFromPoint(event.clientX, event.clientY)?.closest('.designer-widget');
+        if (!target || target === widget || !designCanvas.contains(target)) return;
+        const insertAfter = event.clientY > target.getBoundingClientRect().top + target.offsetHeight / 2;
+        if (insertAfter && widget.nextElementSibling !== target) {
+          designCanvas.insertBefore(widget, target.nextSibling);
+          announce('Suelta el bloque para fijar su nueva posición en esta vista previa.');
+        }
+        if (!insertAfter && widget.previousElementSibling !== target) {
+          designCanvas.insertBefore(widget, target);
+          announce('Suelta el bloque para fijar su nueva posición en esta vista previa.');
+        }
+      });
+      widget.querySelector('.remove-widget').addEventListener('click', event => {
+        event.stopPropagation();
+        removeWidget(widget);
+      });
+    }
+
+    function bindDesignerWidgets() {
+      designCanvas.querySelectorAll('.designer-widget').forEach(bindWidget);
+    }
+
+    window.addEventListener('pointerup', () => {
+      if (!pointerDrag) return;
+      const { widget, moved } = pointerDrag;
+      pointerDrag = null;
+      if (moved) {
+        selectWidget(widget);
+        announce('Orden actualizado en la vista previa.');
+      }
+    });
+    window.addEventListener('pointercancel', () => {
+      pointerDrag = null;
+    });
+
+    function addWidget(kind) {
+      const definitions = {
+        metric: { title: 'Nuevo indicador', body: '<strong style="font-size:24px;color:#294638">12</strong><br>Personaliza el título y el estilo.', width: 6 },
+        table: { title: 'Lista o tabla', body: 'Registros del módulo · datos ordenados por fecha.', width: 12 },
+        chart: { title: 'Gráfico de barras', body: 'Comparación visual de registros por periodo.', chart: 'bars', width: 12 },
+        pie: { title: 'Gráfico circular', body: 'Distribución de los datos por categoría.', chart: 'pie', width: 6 },
+        calendar: { title: 'Calendario', body: 'Hoy · Próxima aplicación · Recordatorios y eventos.', width: 12 },
+        tasks: { title: 'Lista de tareas', body: '☐ Revisar registros pendientes<br>☐ Confirmar actividad programada', width: 6 },
+        status: { title: 'Estado del módulo', body: 'Registros al día y elementos que necesitan atención.', badge: '● Estado actualizado', width: 6 },
+        filters: { title: 'Búsqueda y filtros', body: 'Busca por nombre, fecha, estado o categoría.', width: 12 },
+        heading: { title: 'Título y texto', body: 'Añade instrucciones o una breve descripción.', width: 12 },
+        image: { title: 'Imagen o logo', body: '<img src="../../public/images/logo.png" alt="Logo de FincaControl" style="width:54px;height:54px;object-fit:contain;vertical-align:middle"> Imagen ilustrativa', width: 6 },
+        summary: { title: 'Resumen informativo', body: 'Información breve y relevante para este módulo.', width: 6 },
+        activity: { title: 'Actividad reciente', body: 'Últimos registros y movimientos de la finca.', width: 12 },
+        map: { title: 'Mapa o ubicación', body: 'Espacio para mostrar una ubicación o referencia geográfica.', width: 12 },
+        action: { title: 'Acceso rápido', body: 'Atajo para una acción frecuente.', badge: '＋ Configurar acción', width: 6 },
+        form: { title: 'Formulario rápido', body: 'Campos para registrar información desde el módulo.', badge: '＋ Configurar campos', width: 6 }
+      };
+      const definition = definitions[kind];
+      if (!definition) return;
+      const widget = document.createElement('article');
+      widget.className = 'designer-widget';
+      widget.tabIndex = 0;
+      widget.draggable = false;
+      widget.dataset.width = String(definition.width);
+      widget.dataset.height = 'normal';
+      widget.dataset.shape = '12px';
+      widget.style.gridColumn = `span ${definition.width}`;
+      const chart = definition.chart === 'bars' ? '<div class="widget-bars"><i style="height:45%"></i><i style="height:75%"></i><i style="height:60%"></i><i style="height:90%"></i></div>' : definition.chart === 'pie' ? '<div class="widget-pie" aria-label="Gráfico circular ilustrativo"></div>' : '';
+      const badge = definition.badge ? `<span class="widget-badge">${definition.badge}</span>` : '';
+      widget.innerHTML = `<div class="widget-top"><span class="widget-handle">⠿　Arrastrar</span><button class="remove-widget" aria-label="Quitar ${definition.title}">×</button></div><h4 class="widget-title" data-edit-title>${definition.title}</h4><div class="widget-body">${definition.body}</div>${chart}${badge}`;
+      designCanvas.append(widget);
+      bindWidget(widget);
+      selectWidget(widget);
+      announce(`“${definition.title}” se agregó al diseño de ejemplo.`);
+    }
+
+    function applyWidgetStyle(event) {
+      if (!selectedWidget) return;
+      if (event && event.target.id === 'widget-bg') selectedWidget.dataset.bg = event.target.value;
+      if (event && event.target.id === 'widget-title-color') selectedWidget.dataset.titleColor = event.target.value;
+      if (event && event.target.id === 'widget-text-color') selectedWidget.dataset.textColor = event.target.value;
+      const title = selectedWidget.querySelector('[data-edit-title]');
+      title.textContent = document.getElementById('widget-title-input').value || 'Elemento sin título';
+      const font = document.getElementById('widget-font').value;
+      const titleSize = document.getElementById('widget-title-size').value;
+      const bodySize = document.getElementById('widget-body-size').value;
+      const shape = document.getElementById('widget-shape').value;
+      const width = document.getElementById('widget-width').value;
+      const height = document.getElementById('widget-height').value;
+      selectedWidget.dataset.font = font;
+      selectedWidget.dataset.titleSize = titleSize;
+      selectedWidget.dataset.bodySize = bodySize;
+      selectedWidget.dataset.shape = shape;
+      selectedWidget.dataset.width = width;
+      selectedWidget.dataset.height = height;
+      applyWidgetTheme(selectedWidget);
+      selectedWidget.style.setProperty('--widget-title-size', `${titleSize}px`);
+      selectedWidget.style.setProperty('--widget-body-size', `${bodySize}px`);
+      selectedWidget.style.setProperty('--widget-radius', shape);
+      selectedWidget.style.fontFamily = font;
+      selectedWidget.style.gridColumn = `span ${width}`;
+      selectedWidget.style.minHeight = height === 'compact' ? '74px' : height === 'tall' ? '165px' : '105px';
+      document.getElementById('widget-title-size-output').value = `${titleSize} px`;
+      document.getElementById('widget-body-size-output').value = `${bodySize} px`;
+    }
+
+    function moveSelected(direction) {
+      if (!selectedWidget) return;
+      if (direction < 0 && selectedWidget.previousElementSibling) {
+        designCanvas.insertBefore(selectedWidget, selectedWidget.previousElementSibling);
+      } else if (direction > 0 && selectedWidget.nextElementSibling) {
+        designCanvas.insertBefore(selectedWidget.nextElementSibling, selectedWidget);
+      }
+      announce('Posición del elemento actualizada.');
+    }
+
+    function removeSelected() {
+      removeWidget(selectedWidget);
+    }
+
+    function emptyCanvas() {
+      designCanvas.replaceChildren();
+      selectedWidget = null;
+      refreshInspector();
+      announce('Lienzo vacío. Puedes agregar elementos desde la biblioteca de la izquierda.');
+    }
+
+    function resetCanvas() {
+      designCanvas.innerHTML = defaultCanvasMarkup;
+      selectedWidget = null;
+      bindDesignerWidgets();
+      selectWidget(designCanvas.querySelector('.designer-widget'));
+      announce('Se restauró el diseño de ejemplo de este módulo.');
+    }
+
+    bindDesignerWidgets();
+    selectWidget(designCanvas.querySelector('.designer-widget'));
+    ['widget-title-input', 'widget-bg', 'widget-title-color', 'widget-text-color', 'widget-font', 'widget-title-size', 'widget-body-size', 'widget-shape', 'widget-width', 'widget-height'].forEach(id => {
+      document.getElementById(id).addEventListener('input', applyWidgetStyle);
+      document.getElementById(id).addEventListener('change', applyWidgetStyle);
+    });
+    document.querySelectorAll('.module').forEach(module => {
+      module.addEventListener('click', () => {
+        document.querySelectorAll('.module').forEach(item => {
+          item.classList.remove('selected');
+          item.setAttribute('aria-pressed', 'false');
+        });
+        module.classList.add('selected');
+        module.setAttribute('aria-pressed', 'true');
+        document.getElementById('design-module-name').textContent = module.textContent;
+        announce(`Módulo seleccionado: ${module.textContent}. La muestra visual es ilustrativa.`);
+      });
+    });
+
+    function showSettingsTab(name) {
+      const general = name === 'general';
+      document.getElementById('general-design-view').hidden = !general;
+      document.getElementById('module-design-view').hidden = general;
+      document.getElementById('tab-general').classList.toggle('chosen', general);
+      document.getElementById('tab-general').setAttribute('aria-selected', String(general));
+      document.getElementById('tab-module').classList.toggle('chosen', !general);
+      document.getElementById('tab-module').setAttribute('aria-selected', String(!general));
+    }
+
+    function setTheme(mode) {
+      document.body.dataset.theme = mode;
+      document.getElementById('theme-light').classList.toggle('active', mode === 'light');
+      document.getElementById('theme-light').setAttribute('aria-pressed', String(mode === 'light'));
+      document.getElementById('theme-dark').classList.toggle('active', mode === 'dark');
+      document.getElementById('theme-dark').setAttribute('aria-pressed', String(mode === 'dark'));
+      designCanvas.querySelectorAll('.designer-widget').forEach(applyWidgetTheme);
+      if (selectedWidget) refreshInspector();
+      document.getElementById('theme-status').textContent = mode === 'dark'
+        ? 'Modo oscuro activado; fondos y textos se ajustaron para mantener el contraste.'
+        : 'Modo claro activado; fondos y textos se ajustaron para mantener el contraste.';
+    }
+
+    function showView(name) {
+      document.getElementById('home-view').hidden = name !== 'home';
+      document.getElementById('settings-view').hidden = name !== 'settings';
+      document.getElementById('farms-view').hidden = name !== 'farms';
+      document.getElementById('nav-home').classList.toggle('active', name === 'home');
+      document.getElementById('nav-settings').classList.toggle('active', name === 'settings');
+      document.getElementById('nav-farms').classList.toggle('active', name === 'farms');
+    }
+    function selectFarm(card, name) {
+      document.querySelectorAll('.farm-card').forEach(item => {
+        item.classList.remove('active');
+        const status = item.querySelector('.farm-state');
+        if (status) status.remove();
+        item.querySelector('.farm-info span').textContent = 'Seleccionar →';
+      });
+      card.classList.add('active');
+      const state = document.createElement('span');
+      state.className = 'farm-state';
+      state.textContent = '✓ Seleccionada';
+      card.querySelector('.farm-art').append(state);
+      card.querySelector('.farm-info span').textContent = 'Activa';
+      document.getElementById('active-farm-name').textContent = name;
+    }
+    document.getElementById('nav-home').addEventListener('keydown', event => {
+      if (event.key === 'Enter' || event.key === ' ') showView('home');
+    });
+    document.getElementById('nav-settings').addEventListener('keydown', event => {
+      if (event.key === 'Enter' || event.key === ' ') showView('settings');
+    });
+  </script>
+</body>
+</html>

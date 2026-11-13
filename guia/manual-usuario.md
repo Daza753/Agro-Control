@@ -2,8 +2,8 @@
 
 ![Logotipo de FincaControl](../public/images/logo.png)
 
-- **Versión:** 2.1.2
-- **Actualizado:** 9 de noviembre de 2026
+- **Versión:** 2.2.0
+- **Actualizado:** 13 de noviembre de 2026
 - **Creador y desarrollador:** Oscar David Vega Daza
 
 ## 1. Propósito
@@ -26,7 +26,7 @@ Para soporte, consultas o reportes de errores, escriba a **enterprisesystemsvega
 
 FincaControl se puede usar en:
 
-- **Windows 10 y Windows 11 de 64 bits:** como aplicación de escritorio, usando el instalador `FincaControl Setup 2.1.2.exe` o el portable `FincaControl 2.1.2.exe`.
+- **Windows 10 y Windows 11 de 64 bits:** como aplicación de escritorio, usando el instalador `FincaControl Setup 2.2.0.exe` o el portable `FincaControl 2.2.0.exe`.
 
 ### Requisitos para usar la aplicación de escritorio
 
@@ -93,6 +93,10 @@ Los nombres y módulos visibles pueden variar según los permisos y la configura
 | **Fincas** | Consultar o administrar las fincas disponibles, según el perfil. |
 | **Configuración** | Ajustar opciones de la finca y de la aplicación, según el perfil. |
 | **Ayuda e Información** | Consultar información del creador, licencia y soporte. |
+
+### Personalizar el diseño de los módulos
+
+El administrador puede abrir **Configuración → Diseño por módulo**, elegir un módulo y agregar bloques de presentación, reordenarlos, cambiar sus tamaños, colores, tipografía y bordes, y guardar el diseño para esa finca. El modo claro u oscuro ajusta automáticamente los colores del texto cuando hace falta contraste. El bloque que contiene las pantallas, formularios y acciones reales del módulo se puede reubicar, pero no eliminar ni reducir; los bloques visuales agregados no crean ni modifican registros.
 
 ### Descargar un reporte
 

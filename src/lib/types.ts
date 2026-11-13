@@ -197,6 +197,32 @@ export interface FarmSettings {
   updated_by: string | null;
 }
 
+export type ModuleWidgetType =
+  | 'module-content' | 'metric' | 'chart' | 'table' | 'calendar'
+  | 'list' | 'status' | 'filters' | 'heading' | 'image'
+  | 'summary' | 'activity' | 'map' | 'shortcut' | 'form';
+
+export interface ModuleLayoutItem {
+  id: string;
+  type: ModuleWidgetType;
+  title: string;
+  body: string;
+  width: 4 | 6 | 8 | 12;
+  height: 'compact' | 'normal' | 'tall';
+  background_color: string;
+  heading_color: string;
+  text_color: string;
+  font_family: 'Inter' | 'Arial' | 'Georgia' | 'Verdana';
+  heading_size: number;
+  body_size: number;
+  border_radius: '0rem' | '0.5rem' | '1rem' | '1.5rem';
+}
+
+export interface ModuleLayoutConfig {
+  version: 1;
+  items: ModuleLayoutItem[];
+}
+
 export interface ModuleTheme {
   id: string;
   module_key: string;
@@ -215,6 +241,7 @@ export interface ModuleTheme {
   table_header_bg: string;
   table_row_hover_bg: string;
   density: 'compact' | 'normal' | 'comfortable';
+  layout_config?: ModuleLayoutConfig;
   updated_at: string;
   updated_by: string | null;
 }

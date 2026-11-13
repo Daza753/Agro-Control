@@ -61,6 +61,60 @@ class MilkProductionTests(TestCase):
         )
 
 
+class ModuleThemeApiTests(TestCase):
+    def setUp(self):
+        self.client = APIClient()
+        self.admin = User.objects.create_superuser(
+            "theme-admin@farm.test",
+            "Safe-test-password-513!",
+        )
+        self.client.force_authenticate(self.admin)
+        self.client.credentials(HTTP_X_FARM_ID=str(self.admin.profile.farms.first().pk))
+
+    def content_item(self):
+        return {
+            "id": "module-content",
+            "type": "module-content",
+            "title": "Contenido funcional del módulo",
+            "body": "",
+            "width": 12,
+            "height": "normal",
+            "background_color": "",
+            "heading_color": "",
+            "text_color": "",
+            "font_family": "Inter",
+            "heading_size": 18,
+            "body_size": 14,
+            "border_radius": "1rem",
+        }
+
+    def test_module_layout_config_is_persisted(self):
+        layout_config = {"version": 1, "items": [self.content_item()]}
+
+        response = self.client.post(
+            "/api/module-themes/",
+            {"module_key": "layout-test", "layout_config": layout_config},
+            format="json",
+        )
+
+        self.assertEqual(response.status_code, 201, response.data)
+        theme = ModuleTheme.objects.get(pk=response.data["id"])
+        self.assertEqual(theme.layout_config, layout_config)
+
+    def test_module_layout_config_cannot_remove_functional_content(self):
+        item = self.content_item()
+        item.update({"id": "visual-block", "type": "metric"})
+
+        response = self.client.post(
+            "/api/module-themes/",
+            {"module_key": "layout-test", "layout_config": {"version": 1, "items": [item]}},
+            format="json",
+        )
+
+        self.assertEqual(response.status_code, 400)
+        self.assertFalse(ModuleTheme.objects.filter(module_key="layout-test").exists())
+
+
 class AnimalApiTests(TestCase):
     def setUp(self):
         self.client = APIClient()

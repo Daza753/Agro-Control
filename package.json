@@ -1,7 +1,7 @@
 {
   "name": "finca-control",
   "private": true,
-  "version": "2.1.2",
+  "version": "2.2.0",
   "description": "Sistema de gestión agrícola y ganadera.",
   "author": "Oscar David Vega Daza",
   "type": "module",

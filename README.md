@@ -10,7 +10,15 @@ Consulta [guia/guia-postgresql-django.md](guia/guia-postgresql-django.md) para c
 
 ## Generar ejecutables para Windows 11
 
-En Windows, instala las dependencias con `npm ci`, configura `VITE_API_URL` con la dirección HTTP(S) del servicio Django que puedan alcanzar los equipos usuarios y ejecuta `npm run build:windows`. Por ejemplo, en PowerShell: `$env:VITE_API_URL = "https://api.ejemplo.com"`. No uses `localhost` ni `127.0.0.1` en un paquete que se instalará en otros computadores: esas direcciones señalan al equipo cliente. El script valida la dirección antes de generar el instalador NSIS y la versión portable x64, y usa la versión declarada en `package.json`. Los archivos quedan separados bajo `build_windows/Version_<versión>/Instalador/` y `build_windows/Version_<versión>/Portable/`; el manual se incluye en ambas carpetas y en la carpeta de versión. `build.bat` usa la misma separación dentro de `Programa Ejecutable/`.
+En Windows, instala las dependencias con `npm ci`. El instalador NSIS y el ejecutable portable se conectan por HTTPS a la API de Render:
+
+```powershell
+$env:VITE_API_URL_INSTALLER = "https://agro-control-7f5z.onrender.com"
+$env:VITE_API_URL_PORTABLE = "https://agro-control-7f5z.onrender.com"
+npm run build:windows
+```
+
+El script compila cada paquete por separado y rechaza direcciones loopback para evitar que un ejecutable distribuido intente conectarse al propio computador del usuario. Los archivos quedan separados bajo `build_windows/Version_<versión>/Instalador/` y `build_windows/Version_<versión>/Portable/`; el manual se incluye en ambas carpetas y en la carpeta de versión. `build.bat` usa la misma separación dentro de `Programa Ejecutable/`.
 
 En un equipo nuevo, el primer inicio de sesión se realiza conectado al servicio y no requiere una sesión previa en ese equipo. El inicio offline solo funciona después de autenticar la cuenta en el mismo equipo y descargar la copia offline.
 

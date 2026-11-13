@@ -152,6 +152,7 @@ try {
   Invoke-TrackedCommand -Command 'powershell -NoProfile -ExecutionPolicy Bypass -File scripts\generate-installer-assets.ps1' -StepIndex 0
 
   Write-Host "`nCompilando la aplicacion web..."
+  $env:VITE_API_URL = 'https://agro-control-7f5z.onrender.com'
   Invoke-TrackedCommand -Command 'npm run build' -StepIndex 1
   Show-BuildProgress -StepIndex 1 -StepElapsed $steps[1].Estimate -Complete $true
 

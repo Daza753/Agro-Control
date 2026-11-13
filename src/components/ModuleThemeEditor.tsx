@@ -7,6 +7,10 @@ import {
 import type { ModuleTheme } from '../lib/types';
 import { apiRequest } from '../lib/api';
 import { useModuleThemes, ModuleKey, DEFAULT_THEME } from '../lib/moduleThemes';
+import { createDefaultModuleLayout, getModuleLayout } from '../lib/moduleLayout';
+import { ensureReadableTextColor, getContrastingTextColor } from '../lib/colors';
+import { useSettings } from '../lib/settings';
+import { ModuleLayoutDesigner } from './ModuleLayoutDesigner';
 import { Button, Field, TextInput } from './ui';
 
 const MODULE_LIST: { key: ModuleKey; label: string; icon: React.ReactNode }[] = [
@@ -324,7 +328,39 @@ const STATUS_STYLES: Record<string, { background: string; color: string }> = {
   gray: { background: '#f1f5f9', color: '#475569' },
 };
 
-function ModulePreview({ moduleKey, theme }: { moduleKey: ModuleKey; theme: ModuleTheme }) {
+function ModulePreview({ moduleKey, theme: sourceTheme, isDark = false }: {
+  moduleKey: ModuleKey;
+  theme: ModuleTheme;
+  isDark?: boolean;
+}) {
+  const cardBackground = isDark && sourceTheme.card_bg_color === DEFAULT_THEME.card_bg_color
+    ? '#1e293b'
+    : sourceTheme.card_bg_color;
+  const cardBorder = isDark && sourceTheme.card_border_color === DEFAULT_THEME.card_border_color
+    ? '#334155'
+    : sourceTheme.card_border_color;
+  const tableHeaderBackground = isDark && sourceTheme.table_header_bg === DEFAULT_THEME.table_header_bg
+    ? '#0f172a'
+    : sourceTheme.table_header_bg;
+  const theme: ModuleTheme = {
+    ...sourceTheme,
+    card_bg_color: cardBackground,
+    card_border_color: cardBorder,
+    heading_color: ensureReadableTextColor(
+      isDark && sourceTheme.heading_color === DEFAULT_THEME.heading_color ? '#f1f5f9' : sourceTheme.heading_color,
+      cardBackground,
+    ),
+    body_text_color: ensureReadableTextColor(
+      isDark && sourceTheme.body_text_color === DEFAULT_THEME.body_text_color ? '#cbd5e1' : sourceTheme.body_text_color,
+      cardBackground,
+    ),
+    table_header_bg: tableHeaderBackground,
+    table_row_hover_bg: isDark && sourceTheme.table_row_hover_bg === DEFAULT_THEME.table_row_hover_bg
+      ? '#334155'
+      : sourceTheme.table_row_hover_bg,
+  };
+  const tableHeaderTextColor = ensureReadableTextColor(theme.body_text_color, theme.table_header_bg);
+  const accentTextColor = getContrastingTextColor(theme.accent_color);
   const module = MODULE_PREVIEWS[moduleKey];
   const cardPadding = theme.density === 'compact' ? '0.75rem' : theme.density === 'comfortable' ? '2rem' : theme.card_padding;
   const gridGap = theme.density === 'compact' ? '0.5rem' : theme.density === 'comfortable' ? '1.5rem' : theme.grid_gap;
@@ -386,8 +422,8 @@ function ModulePreview({ moduleKey, theme }: { moduleKey: ModuleKey; theme: Modu
         </div>
         <button
           type="button"
-          className="flex shrink-0 items-center gap-1.5 px-3 py-2 text-xs font-semibold text-white"
-          style={{ backgroundColor: theme.accent_color, borderRadius: theme.card_radius }}
+          className="flex shrink-0 items-center gap-1.5 px-3 py-2 text-xs font-semibold"
+          style={{ backgroundColor: theme.accent_color, color: accentTextColor, borderRadius: theme.card_radius }}
         >
           <span className="text-base leading-none">+</span>
           <span className="hidden sm:inline">{module.action}</span>
@@ -397,8 +433,8 @@ function ModulePreview({ moduleKey, theme }: { moduleKey: ModuleKey; theme: Modu
       <div className="space-y-3 p-3 sm:p-4">
         {module.welcome && (
           <div
-            className="rounded-xl px-4 py-3 text-white"
-            style={{ backgroundColor: theme.accent_color, borderRadius: theme.card_radius }}
+            className="rounded-xl px-4 py-3"
+            style={{ backgroundColor: theme.accent_color, color: accentTextColor, borderRadius: theme.card_radius }}
           >
             <p className="text-xs text-white/80">Bienvenido de nuevo,</p>
             <p className="mt-1 font-semibold">{module.welcome.replace('Bienvenido de nuevo, ', '')}</p>
@@ -509,7 +545,7 @@ function ModulePreview({ moduleKey, theme }: { moduleKey: ModuleKey; theme: Modu
               <thead style={{ backgroundColor: theme.table_header_bg }}>
                 <tr>
                   {module.columns.map((column) => (
-                    <th key={column} className="whitespace-nowrap px-3 py-2 text-[10px] font-semibold uppercase sm:text-xs" style={{ color: theme.body_text_color }}>
+                    <th key={column} className="whitespace-nowrap px-3 py-2 text-[10px] font-semibold uppercase sm:text-xs" style={{ color: tableHeaderTextColor }}>
                       {column}
                     </th>
                   ))}
@@ -540,12 +576,14 @@ function ModulePreview({ moduleKey, theme }: { moduleKey: ModuleKey; theme: Modu
 
 export function ModuleThemeEditor() {
   const { themes, getTheme, updateTheme, refresh } = useModuleThemes();
+  const { settings } = useSettings();
   const [selectedModule, setSelectedModule] = useState<ModuleKey>('dashboard');
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const theme = getTheme(selectedModule);
+  const isDark = settings?.background_mode === 'dark';
 
   const updateField = <K extends keyof ModuleTheme>(key: K, value: ModuleTheme[K]) => {
     updateTheme(selectedModule, { [key]: value });
@@ -573,6 +611,7 @@ export function ModuleThemeEditor() {
       table_header_bg: t.table_header_bg,
       table_row_hover_bg: t.table_row_hover_bg,
       density: t.density,
+      layout_config: getModuleLayout(t.layout_config),
     };
 
     try {
@@ -593,6 +632,7 @@ export function ModuleThemeEditor() {
     updateTheme(selectedModule, {
       ...DEFAULT_THEME,
       module_key: selectedModule,
+      layout_config: createDefaultModuleLayout(),
       id: theme.id,
       updated_at: theme.updated_at,
       updated_by: theme.updated_by,
@@ -621,6 +661,7 @@ export function ModuleThemeEditor() {
       table_header_bg: t.table_header_bg,
       table_row_hover_bg: t.table_row_hover_bg,
       density: t.density,
+      layout_config: getModuleLayout(t.layout_config),
     }));
 
     try {
@@ -680,18 +721,16 @@ export function ModuleThemeEditor() {
         </div>
       </div>
 
-      {/* Live preview */}
-      <div className="space-y-3 rounded-2xl border border-slate-200 bg-white p-4 sm:p-6">
-        <div>
-          <h3 className="text-sm font-semibold uppercase text-slate-500">
-            Vista previa realista: {MODULE_LIST.find((item) => item.key === selectedModule)?.label}
-          </h3>
-          <p className="mt-1 text-xs text-slate-400">
-            Cambia una opcion para ver como se refleja en las tarjetas, textos, tablas y botones de este modulo.
-          </p>
-        </div>
-        <ModulePreview moduleKey={selectedModule} theme={theme} />
-      </div>
+      <ModuleLayoutDesigner
+        moduleKey={selectedModule}
+        moduleLabel={MODULE_LIST.find((item) => item.key === selectedModule)?.label ?? selectedModule}
+        layoutConfig={theme.layout_config}
+        theme={theme}
+        isDark={isDark}
+        logoUrl={settings?.logo_url}
+        content={<ModulePreview moduleKey={selectedModule} theme={theme} isDark={isDark} />}
+        onChange={(layout_config) => updateField('layout_config', layout_config)}
+      />
 
       {/* Controls */}
       <div className="grid lg:grid-cols-2 gap-6">

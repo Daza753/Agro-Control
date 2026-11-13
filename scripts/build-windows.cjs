@@ -10,37 +10,43 @@ const root = path.resolve(__dirname, '..');
 const outputRoot = path.join('build_windows', `Version_${version}`);
 const stagingRoot = path.join(os.tmpdir(), `fincacontrol-${version}-${process.pid}`);
 
-function configureProductionApi() {
+function configureProductionApi(target) {
   const env = loadEnv('production', root, 'VITE_');
-  const apiUrl = process.env.VITE_API_URL?.trim() || env.VITE_API_URL?.trim();
+  const isPortable = target === 'portable';
+  const variable = isPortable ? 'VITE_API_URL_PORTABLE' : 'VITE_API_URL_INSTALLER';
+  const apiUrl = process.env[variable]?.trim()
+    || env[variable]?.trim()
+    || (isPortable && (process.env.VITE_API_URL?.trim() || env.VITE_API_URL?.trim()))
+    || 'https://agro-control-7f5z.onrender.com';
   if (!apiUrl) {
-    throw new Error(
-      'Configura VITE_API_URL con la dirección accesible del servidor de FincaControl antes de crear el instalador. No uses 127.0.0.1 ni localhost para distribuirlo a otros equipos.',
-    );
+    throw new Error(`Configura ${variable} con la dirección accesible de la API de FincaControl.`);
   }
 
   let parsedUrl;
   try {
     parsedUrl = new URL(apiUrl);
   } catch (error) {
-    throw new Error('VITE_API_URL debe ser una URL válida, por ejemplo https://api.ejemplo.com.', { cause: error });
+    throw new Error(`${variable} debe ser una URL válida.`, { cause: error });
   }
   const hostname = parsedUrl.hostname.toLowerCase().replace(/^\[|\]$/g, '');
   const isLoopback = hostname === 'localhost'
     || hostname === '0.0.0.0'
     || hostname === '::1'
     || (isIP(hostname) === 4 && hostname.startsWith('127.'));
-  if (!['http:', 'https:'].includes(parsedUrl.protocol) || isLoopback || parsedUrl.username || parsedUrl.password) {
+  if (!['http:', 'https:'].includes(parsedUrl.protocol)
+    || isLoopback
+    || parsedUrl.username
+    || parsedUrl.password) {
     throw new Error(
-      'VITE_API_URL debe usar HTTP o HTTPS, no puede incluir credenciales y debe apuntar al servidor alcanzable por los equipos clientes (no a localhost ni a una dirección loopback).',
+      `${variable} debe usar HTTP o HTTPS, no incluir credenciales ni apuntar a localhost o una dirección loopback.`,
     );
   }
   if (parsedUrl.search || parsedUrl.hash) {
-    throw new Error('VITE_API_URL no debe incluir parámetros de consulta ni fragmentos.');
+    throw new Error(`${variable} no debe incluir parámetros de consulta ni fragmentos.`);
   }
   process.env.VITE_API_URL = apiUrl.replace(/\/$/, '');
   if (parsedUrl.protocol !== 'https:') {
-    console.warn('Aviso: VITE_API_URL usa HTTP. En producción, se recomienda HTTPS.');
+    console.warn(`Aviso: ${variable} usa HTTP. En producción, se recomienda HTTPS.`);
   }
 }
 
@@ -57,7 +63,6 @@ function run(command, args) {
 }
 
 try {
-  configureProductionApi();
   run(process.execPath, ['scripts/generate-icon.js']);
   run('powershell.exe', [
     '-NoProfile',
@@ -66,18 +71,20 @@ try {
     '-File',
     'scripts/generate-installer-assets.ps1',
   ]);
-  run(process.execPath, ['scripts/update-word-documents.mjs']);
-  run('npm', ['run', 'build']);
+  fs.mkdirSync(stagingRoot, { recursive: true });
+  const userManual = path.join(stagingRoot, 'Manual_Usuario_FincaControl.docx');
+  run(process.execPath, ['scripts/update-word-documents.mjs', '--manual-only', userManual]);
   const installerStaging = path.join(stagingRoot, 'Instalador');
   const portableStaging = path.join(stagingRoot, 'Portable');
   const releaseOutput = path.join(root, outputRoot);
   const installerOutput = path.join(root, outputRoot, 'Instalador');
   const portableOutput = path.join(root, outputRoot, 'Portable');
-  const userManual = path.join(root, 'guia', 'Manual_Usuario_FincaControl.docx');
   fs.mkdirSync(releaseOutput, { recursive: true });
   fs.mkdirSync(installerOutput, { recursive: true });
   fs.mkdirSync(portableOutput, { recursive: true });
 
+  configureProductionApi('installer');
+  run('npm', ['run', 'build']);
   run('npx', [
     'electron-builder',
     'build',
@@ -86,6 +93,9 @@ try {
     '--x64',
     `--config.directories.output=${installerStaging}`,
   ]);
+
+  configureProductionApi('portable');
+  run('npm', ['run', 'build']);
   run('npx', [
     'electron-builder',
     'build',
