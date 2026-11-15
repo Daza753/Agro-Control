@@ -380,6 +380,7 @@ class FarmSettings(models.Model):
     farm = models.ForeignKey(Farm, null=True, blank=True, on_delete=models.CASCADE, related_name="settings")
     farm_name = models.CharField(max_length=200, default="Mi Finca")
     logo_url = models.TextField(null=True, blank=True)
+    cadastral_map_url = models.URLField(max_length=2048, blank=True, default="")
     primary_color = models.CharField(max_length=20, default="#059669")
     secondary_color = models.CharField(max_length=20, default="#0f172a")
     accent_color = models.CharField(max_length=20, default="#10b981")

@@ -1,4 +1,5 @@
 import re
+from urllib.parse import urlsplit
 
 from rest_framework import serializers
 
@@ -391,6 +392,16 @@ class ModuleThemeSerializer(serializers.ModelSerializer):
 
 class FarmSettingsSerializer(serializers.ModelSerializer):
     updated_by = serializers.PrimaryKeyRelatedField(read_only=True)
+
+    def validate_cadastral_map_url(self, value):
+        if value and (
+            urlsplit(value).scheme != "https"
+            or urlsplit(value).hostname != "www.colombiaenmapas.gov.co"
+        ):
+            raise serializers.ValidationError(
+                "Usa un enlace HTTPS de www.colombiaenmapas.gov.co."
+            )
+        return value
 
     class Meta:
         model = FarmSettings

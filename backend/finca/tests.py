@@ -115,6 +115,48 @@ class ModuleThemeApiTests(TestCase):
         self.assertFalse(ModuleTheme.objects.filter(module_key="layout-test").exists())
 
 
+class FarmSettingsApiTests(TestCase):
+    def setUp(self):
+        self.client = APIClient()
+        self.admin = User.objects.create_superuser(
+            "map-admin@farm.test",
+            "Safe-test-password-514!",
+        )
+        self.farm = self.admin.profile.farms.first()
+        self.client.force_authenticate(self.admin)
+        self.client.credentials(HTTP_X_FARM_ID=str(self.farm.pk))
+
+    def test_official_cadastral_map_url_is_saved_for_the_selected_farm(self):
+        map_url = (
+            "https://www.colombiaenmapas.gov.co/"
+            "?module=catastral&npredial=440010006000000010053000000000"
+        )
+        settings = self.farm.settings.get()
+
+        response = self.client.patch(
+            f"/api/farm-settings/{settings.pk}/",
+            {"cadastral_map_url": map_url},
+            format="json",
+        )
+
+        self.assertEqual(response.status_code, 200, response.data)
+        settings.refresh_from_db()
+        self.assertEqual(settings.cadastral_map_url, map_url)
+
+    def test_cadastral_map_url_rejects_non_official_hosts(self):
+        settings = self.farm.settings.get()
+
+        response = self.client.patch(
+            f"/api/farm-settings/{settings.pk}/",
+            {"cadastral_map_url": "https://example.com/fake-cadastral-map"},
+            format="json",
+        )
+
+        self.assertEqual(response.status_code, 400)
+        settings.refresh_from_db()
+        self.assertEqual(settings.cadastral_map_url, "")
+
+
 class AnimalApiTests(TestCase):
     def setUp(self):
         self.client = APIClient()
