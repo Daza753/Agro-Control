@@ -462,6 +462,31 @@ class ModuleTheme(models.Model):
         ]
 
 
+class ModuleWidgetEntry(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    farm = models.ForeignKey(Farm, on_delete=models.CASCADE, related_name="module_widget_entries")
+    module_key = models.CharField(max_length=80)
+    widget_id = models.CharField(max_length=80)
+    kind = models.CharField(max_length=30)
+    data = models.JSONField(default=dict)
+    created_by = models.ForeignKey(
+        Profile,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="created_module_widget_entries",
+    )
+    updated_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        db_table = "module_widget_entries"
+        indexes = [
+            models.Index(fields=["farm", "module_key", "widget_id"]),
+        ]
+        ordering = ["created_at"]
+
+
 class AnimalCategory(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     code = models.CharField(max_length=40)

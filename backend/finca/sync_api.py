@@ -31,6 +31,7 @@ from finca.models import (
     Medication,
     MilkProduction,
     ModuleTheme,
+    ModuleWidgetEntry,
     SyncOperation,
     Vaccine,
 )
@@ -48,6 +49,7 @@ from finca.serializers import (
     MilkProductionSerializer,
     ModuleAccessSerializer,
     ModuleThemeSerializer,
+    ModuleWidgetEntrySerializer,
     VaccineSerializer,
 )
 
@@ -66,6 +68,7 @@ RESOURCE_MAP = {
     "fish-farming": (FishPond, FishPondSerializer, "fish"),
     "farm-settings": (FarmSettings, FarmSettingsSerializer, None),
     "module-themes": (ModuleTheme, ModuleThemeSerializer, None),
+    "module-widget-entries": (ModuleWidgetEntry, ModuleWidgetEntrySerializer, None),
 }
 PATH_PATTERN = re.compile(r"^/api/([a-z-]+)/(?:([0-9a-fA-F-]{36})/)?$")
 ADMIN_ONLY = {"animal-categories", "farm-settings", "module-themes"}
@@ -96,7 +99,22 @@ class SyncOperationsView(APIView):
             "farm-settings": (FarmSettings.objects.filter(farm=farm), FarmSettingsSerializer, None),
             "module-access": (ModuleAccess.objects.filter(farm=farm), ModuleAccessSerializer, None),
             "module-themes": (ModuleTheme.objects.filter(farm=farm), ModuleThemeSerializer, None),
+            "module-widget-entries": (
+                ModuleWidgetEntry.objects.filter(farm=farm),
+                ModuleWidgetEntrySerializer,
+                None,
+            ),
         }
+        if profile.role != Profile.Role.ADMIN:
+            disabled_modules = ModuleAccess.objects.filter(
+                farm=farm,
+                enabled_for_workers=False,
+            ).values_list("module_key", flat=True)
+            definitions["module-widget-entries"] = (
+                ModuleWidgetEntry.objects.filter(farm=farm).exclude(module_key__in=disabled_modules),
+                ModuleWidgetEntrySerializer,
+                None,
+            )
         resources = {}
         for endpoint, (queryset, serializer_class, module_key) in definitions.items():
             enabled = module_key is None or profile.role == Profile.Role.ADMIN or not ModuleAccess.objects.filter(
@@ -180,6 +198,16 @@ class SyncOperationsView(APIView):
         model, serializer_class, module_key = RESOURCE_MAP[resource]
         if resource in ADMIN_ONLY and profile.role != Profile.Role.ADMIN:
             return {"id": str(operation_id), "status": "rejected", "error": "Esta operación requiere un administrador."}
+        if resource == "module-widget-entries":
+            widget_module = (body or {}).get("module_key") or (base_state or {}).get("module_key")
+            if not isinstance(widget_module, str):
+                return {"id": str(operation_id), "status": "rejected", "error": "Falta el módulo del bloque."}
+            if profile.role != Profile.Role.ADMIN and ModuleAccess.objects.filter(
+                farm=farm,
+                module_key=widget_module,
+                enabled_for_workers=False,
+            ).exists():
+                return {"id": str(operation_id), "status": "rejected", "error": "El módulo ya no está habilitado para tu perfil."}
         if module_key:
             allowed = ModuleAccess.objects.filter(
                 farm=farm,
@@ -257,8 +285,11 @@ class SyncOperationsView(APIView):
                     if resource == "animals" or resource in {
                         "vaccines", "medications", "inputs", "equipment",
                         "crops", "fish-farming", "farm-settings", "module-themes",
+                        "module-widget-entries",
                     }:
                         save_kwargs["farm"] = farm
+                    if resource == "module-widget-entries" and instance is None:
+                        save_kwargs["created_by"] = profile
                     if resource == "milk-production" and instance is None:
                         save_kwargs["registered_by"] = profile
                     if resource == "daily-activities":

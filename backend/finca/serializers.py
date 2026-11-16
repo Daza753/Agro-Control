@@ -18,6 +18,7 @@ from finca.models import (
     Medication,
     MilkProduction,
     ModuleTheme,
+    ModuleWidgetEntry,
     Vaccine,
 )
 
@@ -388,6 +389,60 @@ class ModuleThemeSerializer(serializers.ModelSerializer):
                 "El diseño debe conservar un único bloque de contenido funcional."
             )
         return value
+
+
+class ModuleWidgetEntrySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ModuleWidgetEntry
+        fields = (
+            "id", "module_key", "widget_id", "kind", "data",
+            "created_by", "created_at", "updated_at",
+        )
+        read_only_fields = ("id", "created_by", "created_at", "updated_at")
+
+    def validate(self, attrs):
+        module_key = attrs.get("module_key", getattr(self.instance, "module_key", ""))
+        widget_id = attrs.get("widget_id", getattr(self.instance, "widget_id", ""))
+        kind = attrs.get("kind", getattr(self.instance, "kind", ""))
+        data = attrs.get("data", getattr(self.instance, "data", None))
+        if not re.fullmatch(
+            r"(dashboard|animals|milk|vaccines|medications|inputs|equipment|crops|fish|activities|diseases|reports|users|settings)",
+            module_key,
+        ):
+            raise serializers.ValidationError({"module_key": "El módulo no es válido."})
+        if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_-]{0,79}", widget_id):
+            raise serializers.ValidationError({"widget_id": "El identificador del bloque no es válido."})
+        if kind not in {
+            "calendar-event", "list-item", "activity-note", "metric-value",
+            "chart-point", "table-row", "status-value", "form-submission",
+        }:
+            raise serializers.ValidationError({"kind": "El tipo de dato del bloque no es válido."})
+        if not isinstance(data, dict) or len(data) > 20:
+            raise serializers.ValidationError({"data": "Los datos del bloque deben ser un objeto válido."})
+        if len(str(data)) > 10000:
+            raise serializers.ValidationError({"data": "Los datos del bloque son demasiado extensos."})
+        for value in data.values():
+            if not isinstance(value, (str, int, float, bool, type(None))):
+                raise serializers.ValidationError({"data": "Los valores del bloque deben ser simples."})
+            if isinstance(value, str) and len(value) > 1000:
+                raise serializers.ValidationError({"data": "Un valor del bloque supera el máximo permitido."})
+
+        text = data.get("text", data.get("title", data.get("label", data.get("value", ""))))
+        if kind != "form-submission" and (not isinstance(text, (str, int, float)) or not str(text).strip()):
+            raise serializers.ValidationError({"data": "Escribe un valor para guardar este elemento."})
+        if kind == "calendar-event":
+            from django.utils.dateparse import parse_date
+
+            if not isinstance(data.get("date"), str) or parse_date(data["date"]) is None:
+                raise serializers.ValidationError({"data": "El recordatorio requiere una fecha válida."})
+        if kind == "chart-point":
+            try:
+                float(data.get("value"))
+            except (TypeError, ValueError):
+                raise serializers.ValidationError({"data": "El gráfico requiere un valor numérico."})
+        if kind == "list-item" and not isinstance(data.get("done"), bool):
+            raise serializers.ValidationError({"data": "El estado de la tarea no es válido."})
+        return attrs
 
 
 class FarmSettingsSerializer(serializers.ModelSerializer):

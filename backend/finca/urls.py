@@ -16,6 +16,7 @@ from finca.api import (
     MilkProductionViewSet,
     ModuleAccessViewSet,
     ModuleThemeViewSet,
+    ModuleWidgetEntryViewSet,
     VaccineViewSet,
     WorkerActivityReportView,
 )
@@ -36,6 +37,7 @@ router.register("fish-farming", FishPondViewSet, basename="fish-farming")
 router.register("farm-settings", FarmSettingsViewSet, basename="farm-settings")
 router.register("module-access", ModuleAccessViewSet, basename="module-access")
 router.register("module-themes", ModuleThemeViewSet, basename="module-theme")
+router.register("module-widget-entries", ModuleWidgetEntryViewSet, basename="module-widget-entry")
 
 urlpatterns = [
     path("sync/snapshot/", SyncOperationsView.as_view(), name="sync-snapshot"),

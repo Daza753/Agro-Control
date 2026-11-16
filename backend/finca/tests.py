@@ -114,6 +114,43 @@ class ModuleThemeApiTests(TestCase):
         self.assertEqual(response.status_code, 400)
         self.assertFalse(ModuleTheme.objects.filter(module_key="layout-test").exists())
 
+    def test_widget_entries_are_saved_and_filtered_by_module_and_widget(self):
+        response = self.client.post(
+            "/api/module-widget-entries/",
+            {
+                "module_key": "dashboard",
+                "widget_id": "calendar-1",
+                "kind": "calendar-event",
+                "data": {"title": "Vacunar", "date": "2026-11-20"},
+            },
+            format="json",
+        )
+
+        self.assertEqual(response.status_code, 201, response.data)
+        query = "/api/module-widget-entries/?module_key=dashboard&widget_id=calendar-1"
+        result = self.client.get(query)
+        self.assertEqual(result.status_code, 200, result.data)
+        self.assertEqual(len(result.data), 1)
+        self.assertEqual(result.data[0]["data"]["title"], "Vacunar")
+        self.assertEqual(
+            self.client.get("/api/module-widget-entries/?module_key=animals").data,
+            [],
+        )
+
+    def test_widget_entries_reject_invalid_calendar_dates(self):
+        response = self.client.post(
+            "/api/module-widget-entries/",
+            {
+                "module_key": "dashboard",
+                "widget_id": "calendar-1",
+                "kind": "calendar-event",
+                "data": {"title": "Vacunar", "date": "no-es-fecha"},
+            },
+            format="json",
+        )
+
+        self.assertEqual(response.status_code, 400)
+
 
 class FarmSettingsApiTests(TestCase):
     def setUp(self):

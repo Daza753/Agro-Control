@@ -41,6 +41,30 @@ class OfflineSyncApiTests(TestCase):
         self.assertEqual(Animal.objects.filter(farm=self.farm, ica_code="OFFLINE-1").count(), 1)
         self.assertEqual(SyncOperation.objects.filter(user=self.worker, operation_id=operation_id).count(), 1)
 
+    def test_widget_entry_create_syncs_for_an_enabled_farm_module(self):
+        operation_id = uuid.uuid4()
+        operation = {
+            "id": str(operation_id),
+            "farm_id": str(self.farm.pk),
+            "path": "/api/module-widget-entries/",
+            "method": "POST",
+            "body": {
+                "module_key": "dashboard",
+                "widget_id": "list-1",
+                "kind": "list-item",
+                "data": {"text": "Revisar el corral", "done": False},
+            },
+            "base_state": None,
+        }
+
+        response = self.client.post(self.url, {"operations": [operation]}, format="json")
+
+        self.assertEqual(response.data["results"][0]["status"], "applied")
+        self.assertEqual(
+            self.client.get("/api/module-widget-entries/?module_key=dashboard").data[0]["data"]["text"],
+            "Revisar el corral",
+        )
+
     def test_create_animal_with_bull_category_and_full_details(self):
         operation = {
             "id": str(uuid.uuid4()),
@@ -299,7 +323,7 @@ class OfflineSyncApiTests(TestCase):
                 "/api/vaccines/medication-options/",
                 "/api/medications/", "/api/inputs/", "/api/equipment/", "/api/crops/",
                 "/api/fish-farming/", "/api/farm-settings/", "/api/module-access/",
-                "/api/module-themes/",
+                "/api/module-themes/", "/api/module-widget-entries/",
             },
         )
         self.assertTrue(all(isinstance(rows, list) for rows in response.data["resources"].values()))

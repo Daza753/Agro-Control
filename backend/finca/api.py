@@ -28,6 +28,7 @@ from finca.models import (
     Medication,
     MilkProduction,
     ModuleTheme,
+    ModuleWidgetEntry,
     Vaccine,
 )
 from finca.serializers import (
@@ -44,6 +45,7 @@ from finca.serializers import (
     MilkProductionSerializer,
     ModuleAccessSerializer,
     ModuleThemeSerializer,
+    ModuleWidgetEntrySerializer,
     VaccineSerializer,
 )
 
@@ -475,6 +477,52 @@ class ModuleThemeViewSet(ProtectedResourceViewSet):
         serializer.save(
             farm=get_request_farm(self.request),
             updated_by=self.request.user.profile,
+        )
+
+
+class ModuleWidgetEntryPermission(ActiveProfilePermission):
+    message = "Este módulo no está habilitado para tu perfil."
+
+    def has_permission(self, request, view):
+        if not super().has_permission(request, view):
+            return False
+        module_key = request.query_params.get("module_key") or request.data.get("module_key")
+        if not module_key:
+            return False
+        if request.user.profile.role == Profile.Role.ADMIN:
+            return True
+        return not ModuleAccess.objects.filter(
+            farm=get_request_farm(request),
+            module_key=module_key,
+            enabled_for_workers=False,
+        ).exists()
+
+
+class ModuleWidgetEntryViewSet(ProtectedResourceViewSet):
+    queryset = ModuleWidgetEntry.objects.all()
+    serializer_class = ModuleWidgetEntrySerializer
+    permission_classes = [ModuleWidgetEntryPermission]
+    ordering = ("created_at",)
+
+    def get_queryset(self):
+        module_key = (
+            self.request.query_params.get("module_key")
+            or self.request.data.get("module_key")
+        )
+        if not module_key and not self.kwargs.get("pk"):
+            raise ValidationError({"module_key": "Debes indicar el módulo."})
+        queryset = ModuleWidgetEntry.objects.filter(
+            farm=get_request_farm(self.request),
+        )
+        if module_key:
+            queryset = queryset.filter(module_key=module_key)
+        widget_id = self.request.query_params.get("widget_id")
+        return queryset.filter(widget_id=widget_id) if widget_id else queryset
+
+    def perform_create(self, serializer):
+        serializer.save(
+            farm=get_request_farm(self.request),
+            created_by=self.request.user.profile,
         )
 
 
